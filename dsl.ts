@@ -1,6 +1,13 @@
-import { From, KeyCode, KarabinerRules, Manipulator, Modifiers } from "./types";
+import {
+  From,
+  KarabinerRules,
+  KeyCode,
+  Manipulator,
+  Modifiers,
+  To,
+} from "./types";
 
-interface To {
+interface ChainedTo {
   to: (to: KeyCode | ModdedKeyCode) => Manipulator;
 }
 
@@ -14,23 +21,12 @@ export function Rule(
   };
 }
 
-export function from(from: KeyCode | ModdedKeyCode): To {
-  const f = isModded(from)
-    ? {
-        key_code: from.from,
-        modifiers: from.modifiers,
-      }
-    : {
-        key_code: from,
-      };
+export function from(from: KeyCode | ModdedKeyCode): ChainedTo {
+  const f = fff(from);
 
   return {
     to: (to: KeyCode | ModdedKeyCode): Manipulator => {
-      const t = isUnmodded(to)
-        ? {
-            key_code: to,
-          }
-        : { key_code: to.from, modifiers: to.modifiers.mandatory };
+      const t = ttt(to);
       return {
         type: "basic",
         from: f,
@@ -40,12 +36,6 @@ export function from(from: KeyCode | ModdedKeyCode): To {
   };
 }
 
-function isModded(key: KeyCode | ModdedKeyCode): key is ModdedKeyCode {
-  return !!key["modifiers"];
-}
-function isUnmodded(key: KeyCode | ModdedKeyCode): key is KeyCode {
-  return key["modifiers"] === undefined;
-}
 type ModdedKeyCode = {
   from: KeyCode;
   modifiers: Modifiers;
@@ -67,4 +57,22 @@ export function left_shift(from: KeyCode): ModdedKeyCode {
     from,
     modifiers: { mandatory: ["left_shift"] },
   };
+}
+
+function isKeyCode(from: unknown): from is KeyCode {
+  return typeof from === "string";
+}
+function fff(from: KeyCode | ModdedKeyCode): From {
+  if (isKeyCode(from)) {
+    return { key_code: from };
+  } else {
+    return { key_code: from.from, modifiers: from.modifiers };
+  }
+}
+function ttt(to: KeyCode | ModdedKeyCode): To {
+  if (isKeyCode(to)) {
+    return { key_code: to };
+  } else {
+    return { key_code: to.from, modifiers: to.modifiers.mandatory };
+  }
 }
