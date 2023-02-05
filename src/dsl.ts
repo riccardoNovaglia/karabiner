@@ -9,21 +9,29 @@ import {
 
 export function Rule(
   description: string,
-  manipulator: Manipulator,
+  manipulators: ChainedOptionalDescription | ChainedOptionalDescription[],
   globalFilter: any = undefined
 ): KarabinerRules {
-  delete manipulator["withDescription"];
-  if (globalFilter) {
-    manipulator.conditions = [
-      {
-        bundle_identifiers: [globalFilter],
-        type: "frontmost_application_if",
-      },
-    ];
-  }
+  const manipulatorsValues = isSigleManipulator(manipulators)
+    ? [manipulators]
+    : manipulators;
+
+  manipulatorsValues.map((manipulator) => {
+    delete manipulator["withDescription"];
+    if (globalFilter) {
+      manipulator.conditions = [
+        {
+          bundle_identifiers: [globalFilter],
+          type: "frontmost_application_if",
+        },
+      ];
+    }
+    return manipulator;
+  });
+
   return {
     description,
-    manipulators: [manipulator],
+    manipulators: manipulatorsValues,
   };
 }
 
@@ -100,4 +108,10 @@ function ttt(to: KeyCode | ModdedKeyCode): To {
   } else {
     return { key_code: to.from, modifiers: to.modifiers.mandatory };
   }
+}
+
+function isSigleManipulator(
+  manipulators: ChainedOptionalDescription | ChainedOptionalDescription[]
+): manipulators is ChainedOptionalDescription {
+  return !Array.isArray(manipulators);
 }

@@ -91,3 +91,39 @@ it("frontmost app", () => {
     ],
   });
 });
+
+it("multiple manipulators", () => {
+  expect(
+    Rule(
+      "Zoom",
+      [from("f1").to("f2"), from("a").to("b")],
+      frontmostApp("us.zoom.xos")
+    )
+  ).toEqual({
+    description: "Zoom",
+    manipulators: [
+      {
+        conditions: [
+          {
+            bundle_identifiers: ["us.zoom.xos"],
+            type: "frontmost_application_if",
+          },
+        ],
+        from: { key_code: "f1" },
+        to: [{ key_code: "f2" }],
+        type: "basic",
+      },
+      {
+        conditions: [
+          {
+            bundle_identifiers: ["us.zoom.xos"],
+            type: "frontmost_application_if",
+          },
+        ],
+        from: { key_code: "a" },
+        to: [{ key_code: "b" }],
+        type: "basic",
+      },
+    ],
+  });
+});
