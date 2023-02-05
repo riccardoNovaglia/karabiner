@@ -7,34 +7,46 @@ import {
   To,
 } from "./types";
 
-interface ChainedTo {
-  to: (to: KeyCode | ModdedKeyCode) => Manipulator;
-}
-
 export function Rule(
   description: string,
   manipulator: Manipulator
 ): KarabinerRules {
+  delete manipulator["withDescription"];
   return {
     description,
     manipulators: [manipulator],
   };
 }
 
+interface ChainedTo {
+  to: (to: KeyCode | ModdedKeyCode) => ChainedOptionalDescription;
+}
 export function from(from: KeyCode | ModdedKeyCode): ChainedTo {
   const f = fff(from);
 
   return {
-    to: (to: KeyCode | ModdedKeyCode): Manipulator => {
+    to: (to: KeyCode | ModdedKeyCode): ChainedOptionalDescription => {
       const t = ttt(to);
       return {
         type: "basic",
         from: f,
         to: [t],
+        withDescription: (description: string): Manipulator => {
+          return {
+            type: "basic",
+            from: f,
+            to: [t],
+            description: description,
+          };
+        },
       };
     },
   };
 }
+
+type ChainedOptionalDescription = Manipulator & {
+  withDescription?: (description: string) => Manipulator;
+};
 
 type ModdedKeyCode = {
   from: KeyCode;

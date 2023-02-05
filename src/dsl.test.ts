@@ -1,4 +1,4 @@
-import { Rule, from, left_ctrl, left_opt, left_shift } from "./dsl";
+import { from, left_ctrl, left_opt, left_shift, Rule } from "./dsl";
 
 it("simplest", () => {
   expect(Rule("a b", from("a").to("b"))).toEqual({
@@ -69,4 +69,24 @@ it("with modi to", () => {
       ],
     }
   );
+});
+
+it("description", () => {
+  expect(Rule("a b", from("a").to("b").withDescription("a to b"))).toEqual({
+    description: "a b",
+    manipulators: [
+      {
+        description: "a to b",
+        from: {
+          key_code: "a",
+        },
+        to: [
+          {
+            key_code: "b",
+          },
+        ],
+        type: "basic",
+      },
+    ],
+  });
 });
