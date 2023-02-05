@@ -11,17 +11,7 @@ it("simplest", () => {
   expect(Rule("a b", from("a").to("b"))).toEqual({
     description: "a b",
     manipulators: [
-      {
-        from: {
-          key_code: "a",
-        },
-        to: [
-          {
-            key_code: "b",
-          },
-        ],
-        type: "basic",
-      },
+      { from: { key_code: "a" }, to: [{ key_code: "b" }], type: "basic" },
     ],
   });
 });
@@ -38,15 +28,9 @@ it("with modi from", () => {
       {
         from: {
           key_code: "delete_or_backspace",
-          modifiers: {
-            mandatory: ["left_control"],
-          },
+          modifiers: { mandatory: ["left_control"] },
         },
-        to: [
-          {
-            key_code: "delete_forward",
-          },
-        ],
+        to: [{ key_code: "delete_forward" }],
         type: "basic",
       },
     ],
@@ -59,18 +43,8 @@ it("with modi to", () => {
       description: "easy percent",
       manipulators: [
         {
-          from: {
-            key_code: "p",
-            modifiers: {
-              mandatory: ["left_option"],
-            },
-          },
-          to: [
-            {
-              key_code: "5",
-              modifiers: ["left_shift"],
-            },
-          ],
+          from: { key_code: "p", modifiers: { mandatory: ["left_option"] } },
+          to: [{ key_code: "5", modifiers: ["left_shift"] }],
           type: "basic",
         },
       ],
@@ -84,14 +58,8 @@ it("description", () => {
     manipulators: [
       {
         description: "a to b",
-        from: {
-          key_code: "a",
-        },
-        to: [
-          {
-            key_code: "b",
-          },
-        ],
+        from: { key_code: "a" },
+        to: [{ key_code: "b" }],
         type: "basic",
       },
     ],
@@ -116,15 +84,8 @@ it("frontmost app", () => {
             type: "frontmost_application_if",
           },
         ],
-        from: {
-          key_code: "f1",
-        },
-        to: [
-          {
-            key_code: "a",
-            modifiers: ["left_shift"],
-          },
-        ],
+        from: { key_code: "f1" },
+        to: [{ key_code: "a", modifiers: ["left_shift"] }],
         type: "basic",
       },
     ],
