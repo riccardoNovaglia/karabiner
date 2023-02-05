@@ -1,4 +1,11 @@
-import { from, left_ctrl, left_opt, left_shift, Rule } from "./dsl";
+import {
+  Rule,
+  from,
+  left_ctrl,
+  left_opt,
+  left_shift,
+  frontmostApp,
+} from "./dsl";
 
 it("simplest", () => {
   expect(Rule("a b", from("a").to("b"))).toEqual({
@@ -83,6 +90,39 @@ it("description", () => {
         to: [
           {
             key_code: "b",
+          },
+        ],
+        type: "basic",
+      },
+    ],
+  });
+});
+
+it("frontmost app", () => {
+  expect(
+    Rule(
+      "Zoom",
+      from("f1").to(left_shift("a")).withDescription("f1 to toggle mute"),
+      frontmostApp("us.zoom.xos")
+    )
+  ).toEqual({
+    description: "Zoom",
+    manipulators: [
+      {
+        description: "f1 to toggle mute",
+        conditions: [
+          {
+            bundle_identifiers: ["us.zoom.xos"],
+            type: "frontmost_application_if",
+          },
+        ],
+        from: {
+          key_code: "f1",
+        },
+        to: [
+          {
+            key_code: "a",
+            modifiers: ["left_shift"],
           },
         ],
         type: "basic",

@@ -9,9 +9,18 @@ import {
 
 export function Rule(
   description: string,
-  manipulator: Manipulator
+  manipulator: Manipulator,
+  globalFilter: any = undefined
 ): KarabinerRules {
   delete manipulator["withDescription"];
+  if (globalFilter) {
+    manipulator.conditions = [
+      {
+        bundle_identifiers: [globalFilter],
+        type: "frontmost_application_if",
+      },
+    ];
+  }
   return {
     description,
     manipulators: [manipulator],
@@ -47,6 +56,10 @@ export function from(from: KeyCode | ModdedKeyCode): ChainedTo {
 type ChainedOptionalDescription = Manipulator & {
   withDescription?: (description: string) => Manipulator;
 };
+
+export function frontmostApp(bundle_identifier: string) {
+  return bundle_identifier;
+}
 
 type ModdedKeyCode = {
   from: KeyCode;
