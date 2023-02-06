@@ -5,6 +5,7 @@ import {
   left_opt,
   left_shift,
   frontmostApp,
+  shell,
 } from "./dsl";
 
 test("simplest", () => {
@@ -122,6 +123,25 @@ test("multiple manipulators", () => {
         ],
         from: { key_code: "a" },
         to: [{ key_code: "b" }],
+        type: "basic",
+      },
+    ],
+  });
+});
+
+test("shell command", () => {
+  expect(Rule("run shell", from("d").to(shell("say hello")))).toEqual({
+    description: "run shell",
+    manipulators: [
+      {
+        from: {
+          key_code: "d",
+        },
+        to: [
+          {
+            shell_command: "say hello",
+          },
+        ],
         type: "basic",
       },
     ],

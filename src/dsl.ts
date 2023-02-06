@@ -36,13 +36,13 @@ export function Rule(
 }
 
 interface ChainedTo {
-  to: (to: KeyCode | ModdedKeyCode) => ChainedOptionalDescription;
+  to: (to: KeyCode | ModdedKeyCode | Shell) => ChainedOptionalDescription;
 }
 export function from(from: KeyCode | ModdedKeyCode): ChainedTo {
   const f = fff(from);
 
   return {
-    to: (to: KeyCode | ModdedKeyCode): ChainedOptionalDescription => {
+    to: (to: KeyCode | ModdedKeyCode | Shell): ChainedOptionalDescription => {
       const t = ttt(to);
       return {
         type: "basic",
@@ -91,6 +91,12 @@ export function left_shift(from: KeyCode): ModdedKeyCode {
     modifiers: { mandatory: ["left_shift"] },
   };
 }
+type Shell = {
+  shell_command: string;
+};
+export function shell(command: string): Shell {
+  return { shell_command: command };
+}
 
 function isKeyCode(from: unknown): from is KeyCode {
   return typeof from === "string";
@@ -102,8 +108,13 @@ function fff(from: KeyCode | ModdedKeyCode): From {
     return { key_code: from.from, modifiers: from.modifiers };
   }
 }
-function ttt(to: KeyCode | ModdedKeyCode): To {
-  if (isKeyCode(to)) {
+function isShell(to: KeyCode | ModdedKeyCode | Shell): to is Shell {
+  return to["shell_command"] !== undefined;
+}
+function ttt(to: KeyCode | ModdedKeyCode | Shell): To {
+  if (isShell(to)) {
+    return to;
+  } else if (isKeyCode(to)) {
     return { key_code: to };
   } else {
     return { key_code: to.from, modifiers: to.modifiers.mandatory };
