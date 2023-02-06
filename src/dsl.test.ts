@@ -7,7 +7,7 @@ import {
   frontmostApp,
 } from "./dsl";
 
-it("simplest", () => {
+test("simplest", () => {
   expect(Rule("a b", from("a").to("b"))).toEqual({
     description: "a b",
     manipulators: [
@@ -16,7 +16,7 @@ it("simplest", () => {
   });
 });
 
-it("with modi from", () => {
+test("with modi from", () => {
   expect(
     Rule(
       "easy delete",
@@ -37,7 +37,7 @@ it("with modi from", () => {
   });
 });
 
-it("with modi to", () => {
+test("with modi to", () => {
   expect(Rule("easy percent", from(left_opt("p")).to(left_shift("5")))).toEqual(
     {
       description: "easy percent",
@@ -52,7 +52,7 @@ it("with modi to", () => {
   );
 });
 
-it("description", () => {
+test("description", () => {
   expect(Rule("a b", from("a").to("b").withDescription("a to b"))).toEqual({
     description: "a b",
     manipulators: [
@@ -66,7 +66,7 @@ it("description", () => {
   });
 });
 
-it("frontmost app", () => {
+test("frontmost app", () => {
   expect(
     Rule(
       "Zoom",
@@ -92,7 +92,7 @@ it("frontmost app", () => {
   });
 });
 
-it("multiple manipulators", () => {
+test("multiple manipulators", () => {
   expect(
     Rule(
       "Zoom",
