@@ -61,18 +61,15 @@ export function SublayerRule(
       },
     ],
   } as Manipulator;
-
-  const updatedManipulators = manipulatorsValues.map((manipulator) => {
-    const condition = {
-      type: "variable_if",
-      name: description,
-      value: 1,
-    } satisfies VariableCondition;
-    return {
-      ...manipulator,
-      conditions: [condition],
-    };
-  });
+  const condition: VariableCondition = {
+    type: "variable_if",
+    name: description,
+    value: 1,
+  };
+  const updatedManipulators = manipulatorsValues.map((manipulator) => ({
+    ...manipulator,
+    conditions: [condition],
+  }));
 
   return {
     description,
