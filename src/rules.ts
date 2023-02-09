@@ -1,6 +1,7 @@
 import fs from "fs";
 import { KarabinerRules, From, KeyCode } from "./types";
 import { createHyperSubLayers, app, open } from "./utils";
+import { Rule, from, left_ctrl, left_opt, left_shift } from "./dsl";
 
 const rules: KarabinerRules[] = [
   // Define the Hyper key itself
@@ -54,24 +55,17 @@ const rules: KarabinerRules[] = [
       n: app("Notion"),
       y: app("Spotify"),
     },
-
-    // v = "moVe" which isn't "m" because we want it to be on the left hand
-    // so that jkli work like asdw
-    v: {
-      j: {
-        to: [{ key_code: "left_arrow" }],
-      },
-      k: {
-        to: [{ key_code: "down_arrow" }],
-      },
-      l: {
-        to: [{ key_code: "right_arrow" }],
-      },
-      i: {
-        to: [{ key_code: "up_arrow" }],
-      },
-    },
   }),
+];
+
+const myRules = [
+  Rule("caps lock to escape", from("caps_lock").to("escape")),
+  Rule("fn to right-control switch", from("caps_lock").to("escape")), // TODO: device filter
+  Rule(
+    "Easy delete",
+    from(left_ctrl("delete_or_backspace")).to("delete_forward")
+  ),
+  Rule("Easy percent", from(left_opt("p")).to(left_shift("5"))),
 ];
 
 fs.writeFileSync(

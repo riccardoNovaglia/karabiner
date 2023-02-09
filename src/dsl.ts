@@ -11,15 +11,15 @@ import {
 export function Rule(
   description: string,
   manipulators: ChainedOptionalDescription | ChainedOptionalDescription[],
-  globalFilter: any = undefined
+  frontmostApplication: any = undefined
 ): KarabinerRules {
   const manipulatorsValues = cleanManipulators(manipulators);
 
   manipulatorsValues.map((manipulator) => {
-    if (globalFilter) {
+    if (frontmostApplication) {
       manipulator.conditions = [
         {
-          bundle_identifiers: [globalFilter],
+          bundle_identifiers: [frontmostApplication],
           type: "frontmost_application_if",
         },
       ];
