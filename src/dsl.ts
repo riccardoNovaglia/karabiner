@@ -5,6 +5,7 @@ import {
   Manipulator,
   Modifiers,
   To,
+  VaribaleCondition,
 } from "./types";
 
 export function Rule(
@@ -12,12 +13,9 @@ export function Rule(
   manipulators: ChainedOptionalDescription | ChainedOptionalDescription[],
   globalFilter: any = undefined
 ): KarabinerRules {
-  const manipulatorsValues = isSigleManipulator(manipulators)
-    ? [manipulators]
-    : manipulators;
+  const manipulatorsValues = cleanManipulators(manipulators);
 
   manipulatorsValues.map((manipulator) => {
-    delete manipulator["withDescription"];
     if (globalFilter) {
       manipulator.conditions = [
         {
@@ -33,6 +31,66 @@ export function Rule(
     description,
     manipulators: manipulatorsValues,
   };
+}
+
+export function SublayerRule(
+  description: string,
+  activationKey: KeyCode,
+  manipulators: ChainedOptionalDescription | ChainedOptionalDescription[]
+): KarabinerRules {
+  const manipulatorsValues = cleanManipulators(manipulators);
+  const activationRule = {
+    type: "basic",
+    from: {
+      key_code: activationKey,
+    },
+    to_after_key_up: [
+      {
+        set_variable: {
+          name: description,
+          value: 0,
+        },
+      },
+    ],
+    to: [
+      {
+        set_variable: {
+          name: description,
+          value: 1,
+        },
+      },
+    ],
+  } as Manipulator;
+
+  const updatedManipulators = manipulatorsValues.map((manipulator) => {
+    const condition = {
+      type: "variable_if",
+      name: description,
+      value: 1,
+    } satisfies VaribaleCondition;
+    return {
+      ...manipulator,
+      conditions: [condition],
+    };
+  });
+
+  return {
+    description,
+    manipulators: [activationRule, ...updatedManipulators],
+  };
+}
+
+function cleanManipulators(
+  manipulators: ChainedOptionalDescription | ChainedOptionalDescription[]
+): Manipulator[] {
+  const manipulatorsValues = isSigleManipulator(manipulators)
+    ? [manipulators]
+    : manipulators;
+
+  return manipulatorsValues.map((manipulator) => {
+    delete manipulator["withDescription"];
+    return manipulator;
+  });
 }
 
 interface ChainedTo {

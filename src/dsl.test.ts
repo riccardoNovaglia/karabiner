@@ -6,6 +6,7 @@ import {
   left_shift,
   frontmostApp,
   shell,
+  SublayerRule,
 } from "./dsl";
 
 test("simplest", () => {
@@ -143,6 +144,54 @@ test("shell command", () => {
           },
         ],
         type: "basic",
+      },
+    ],
+  });
+});
+
+test("sublayer commands", () => {
+  expect(SublayerRule("name", "a", from("b").to("c"))).toEqual({
+    description: "name",
+    manipulators: [
+      {
+        type: "basic",
+        from: {
+          key_code: "a",
+        },
+        to_after_key_up: [
+          {
+            set_variable: {
+              name: "name",
+              value: 0,
+            },
+          },
+        ],
+        to: [
+          {
+            set_variable: {
+              name: "name",
+              value: 1,
+            },
+          },
+        ],
+      },
+      {
+        type: "basic",
+        from: {
+          key_code: "b",
+        },
+        to: [
+          {
+            key_code: "c",
+          },
+        ],
+        conditions: [
+          {
+            type: "variable_if",
+            name: "name",
+            value: 1,
+          },
+        ],
       },
     ],
   });
