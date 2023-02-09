@@ -35,15 +35,13 @@ export function Rule(
 
 export function SublayerRule(
   description: string,
-  activationKey: KeyCode,
+  activationKeys: KeyCode | ModdedKeyCode,
   manipulators: ChainedOptionalDescription | ChainedOptionalDescription[]
 ): KarabinerRules {
   const manipulatorsValues = cleanManipulators(manipulators);
   const activationRule = {
     type: "basic",
-    from: {
-      key_code: activationKey,
-    },
+    from: fff(activationKeys),
     to_after_key_up: [
       {
         set_variable: {

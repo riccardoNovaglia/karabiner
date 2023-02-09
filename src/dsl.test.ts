@@ -196,3 +196,54 @@ test("sublayer commands", () => {
     ],
   });
 });
+
+test("sublayer commands - complex activation", () => {
+  expect(SublayerRule("name", left_shift("a"), from("b").to("c"))).toEqual({
+    description: "name",
+    manipulators: [
+      {
+        type: "basic",
+        from: {
+          key_code: "a",
+          modifiers: {
+            mandatory: ["left_shift"],
+          },
+        },
+        to_after_key_up: [
+          {
+            set_variable: {
+              name: "name",
+              value: 0,
+            },
+          },
+        ],
+        to: [
+          {
+            set_variable: {
+              name: "name",
+              value: 1,
+            },
+          },
+        ],
+      },
+      {
+        type: "basic",
+        from: {
+          key_code: "b",
+        },
+        to: [
+          {
+            key_code: "c",
+          },
+        ],
+        conditions: [
+          {
+            type: "variable_if",
+            name: "name",
+            value: 1,
+          },
+        ],
+      },
+    ],
+  });
+});
