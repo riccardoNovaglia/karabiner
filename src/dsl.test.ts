@@ -8,6 +8,7 @@ import {
   shell,
   SublayerRule,
   AppRule,
+  multiMod,
 } from "./dsl";
 
 test("simplest", () => {
@@ -34,6 +35,23 @@ test("with modi from", () => {
           modifiers: { mandatory: ["left_control"] },
         },
         to: [{ key_code: "delete_forward" }],
+        type: "basic",
+      },
+    ],
+  });
+});
+test("with multi modi from", () => {
+  expect(
+    Rule("multi", from(multiMod("a", ["left_control", "left_shift"])).to("b"))
+  ).toEqual({
+    description: "multi",
+    manipulators: [
+      {
+        from: {
+          key_code: "a",
+          modifiers: { mandatory: ["left_control", "left_shift"] },
+        },
+        to: [{ key_code: "b" }],
         type: "basic",
       },
     ],

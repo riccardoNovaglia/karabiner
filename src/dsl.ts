@@ -165,6 +165,12 @@ export function left_shift(from: KeyCode): ModdedKeyCode {
     modifiers: { mandatory: ["left_shift"] },
   };
 }
+export function multiMod(from: KeyCode, mods: KeyCode[]): ModdedKeyCode {
+  return {
+    from,
+    modifiers: { mandatory: mods },
+  };
+}
 type Shell = {
   shell_command: string;
 };
