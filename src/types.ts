@@ -122,8 +122,7 @@ export interface MouseKey {
   speed_multiplier?: number;
 }
 
-export type KeyCode =
-  | "caps_lock"
+export type ModKeys =
   | "left_control"
   | "left_shift"
   | "left_option"
@@ -132,7 +131,12 @@ export type KeyCode =
   | "right_shift"
   | "right_option"
   | "right_command"
+  | "fn";
+
+export type KeyCode =
+  | ModKeys
   | "fn"
+  | "caps_lock"
   | "return_or_enter"
   | "escape"
   | "delete_or_backspace"

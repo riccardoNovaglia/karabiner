@@ -5,6 +5,7 @@ import {
   KeyCode,
   Manipulator,
   Modifiers,
+  ModKeys,
   To,
   VariableCondition,
 } from "./types";
@@ -165,7 +166,7 @@ export function left_shift(from: KeyCode): ModdedKeyCode {
     modifiers: { mandatory: ["left_shift"] },
   };
 }
-export function multiMod(from: KeyCode, mods: KeyCode[]): ModdedKeyCode {
+export function multiMod(from: KeyCode, mods: ModKeys[]): ModdedKeyCode {
   return {
     from,
     modifiers: { mandatory: mods },
