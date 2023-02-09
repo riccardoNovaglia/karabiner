@@ -26,7 +26,7 @@ type Conditions =
   | VariableCondition
   | EventChangedCondition;
 
-type FrontMostApplicationCondition = {
+export type FrontMostApplicationCondition = {
   type: "frontmost_application_if" | "frontmost_application_unless";
   bundle_identifiers?: string[];
   file_paths?: string[];

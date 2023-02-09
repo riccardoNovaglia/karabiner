@@ -1,5 +1,6 @@
 import {
   From,
+  FrontMostApplicationCondition,
   KarabinerRules,
   KeyCode,
   Manipulator,
@@ -72,6 +73,26 @@ export function SublayerRule(
   return {
     description,
     manipulators: [activationRule, ...updatedManipulators],
+  };
+}
+export function AppRule(
+  description: string,
+  bundleIdentifier: string,
+  manipulators: ChainedOptionalDescription | ChainedOptionalDescription[]
+) {
+  const manipulatorsValues = cleanManipulators(manipulators);
+  const condition: FrontMostApplicationCondition = {
+    type: "frontmost_application_if",
+    bundle_identifiers: [bundleIdentifier],
+  };
+  const updatedManipulators = manipulatorsValues.map((manipulator) => ({
+    ...manipulator,
+    conditions: [condition],
+  }));
+
+  return {
+    description,
+    manipulators: updatedManipulators,
   };
 }
 
