@@ -5,7 +5,7 @@ import {
   Manipulator,
   Modifiers,
   To,
-  VaribaleCondition,
+  VariableCondition,
 } from "./types";
 
 export function Rule(
@@ -67,7 +67,7 @@ export function SublayerRule(
       type: "variable_if",
       name: description,
       value: 1,
-    } satisfies VaribaleCondition;
+    } satisfies VariableCondition;
     return {
       ...manipulator,
       conditions: [condition],

@@ -21,9 +21,9 @@ export interface Parameters {
 type Conditions =
   | FrontMostApplicationCondition
   | DeviceCondition
-  | KeybaordTypeCondition
+  | KeyboardTypeCondition
   | InputSourceCondition
-  | VaribaleCondition
+  | VariableCondition
   | EventChangedCondition;
 
 type FrontMostApplicationCondition = {
@@ -53,7 +53,7 @@ interface Identifiers {
   is_built_in_keyboard?: boolean;
 }
 
-type KeybaordTypeCondition = {
+type KeyboardTypeCondition = {
   type: "keyboard_type_if" | "keyboard_type_unless";
   keyboard_types: string[];
   description?: string;
@@ -71,7 +71,7 @@ interface InputSource {
   input_mode_id?: string;
 }
 
-export type VaribaleCondition = {
+export type VariableCondition = {
   type: "variable_if" | "variable_unless";
   name: string | number | boolean;
   value: string | number;
