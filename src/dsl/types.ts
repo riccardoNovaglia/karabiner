@@ -7,8 +7,13 @@ export interface ChainedTo {
 }
 
 export type ChainedOptionalDescription = Manipulator & {
-  withDescription?: (description: string) => ChainedOptionalDescription;
+  withDescription: (description: string) => Manipulator;
 };
+export type ManipulatorsInput =
+  | Manipulator
+  | Manipulator[]
+  | ChainedOptionalDescription
+  | ChainedOptionalDescription[];
 
 export type Shell = {
   shell_command: string;

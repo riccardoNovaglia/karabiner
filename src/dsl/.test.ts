@@ -99,31 +99,6 @@ test("description", () => {
   });
 });
 
-test("frontmost app", () => {
-  expect(
-    Rule(
-      "Zoom",
-      from("f1").to(left_shift("a")).withDescription("f1 to toggle mute"),
-      frontmostApp("us.zoom.xos")
-    )
-  ).toEqual({
-    description: "Zoom",
-    manipulators: [
-      {
-        description: "f1 to toggle mute",
-        conditions: [
-          {
-            bundle_identifiers: ["us.zoom.xos"],
-            type: "frontmost_application_if",
-          },
-        ],
-        from: { key_code: "f1" },
-        to: [{ key_code: "a", modifiers: ["left_shift"] }],
-        type: "basic",
-      },
-    ],
-  });
-});
 test("frontmost app - nicer", () => {
   expect(
     AppRule("Zoom", "us.zoom.xos", [
@@ -150,11 +125,7 @@ test("frontmost app - nicer", () => {
 
 test("multiple manipulators", () => {
   expect(
-    Rule(
-      "Zoom",
-      [from("f1").to("f2"), from("a").to("b")],
-      frontmostApp("us.zoom.xos")
-    )
+    AppRule("Zoom", "us.zoom.xos", [from("f1").to("f2"), from("a").to("b")])
   ).toEqual({
     description: "Zoom",
     manipulators: [

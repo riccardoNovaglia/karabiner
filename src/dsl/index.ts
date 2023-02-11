@@ -8,32 +8,25 @@ import {
   VariableCondition,
 } from "../types";
 import {
+  isChainedManipulator,
   isKeyCode,
+  isManipulator,
   isMultiKeyCode,
   isShell,
-  isSigleManipulator,
 } from "./guards";
 import { ModdedKeyCode } from "./modifiers";
-import { ChainedOptionalDescription, ChainedTo, ToInput } from "./types";
+import {
+  ChainedOptionalDescription,
+  ChainedTo,
+  ManipulatorsInput,
+  ToInput,
+} from "./types";
 
 export function Rule(
   description: string,
-  manipulators: ChainedOptionalDescription | ChainedOptionalDescription[],
-  frontmostApplication: any = undefined
+  manipulators: ManipulatorsInput
 ): KarabinerRules {
   const manipulatorsValues = cleanManipulators(manipulators);
-
-  manipulatorsValues.map((manipulator) => {
-    if (frontmostApplication) {
-      manipulator.conditions = [
-        {
-          bundle_identifiers: [frontmostApplication],
-          type: "frontmost_application_if",
-        },
-      ];
-    }
-    return manipulator;
-  });
 
   return {
     description,
@@ -44,7 +37,7 @@ export function Rule(
 export function SublayerRule(
   description: string,
   activationKeys: KeyCode | ModdedKeyCode,
-  manipulators: ChainedOptionalDescription | ChainedOptionalDescription[]
+  manipulators: ManipulatorsInput
 ): KarabinerRules {
   const manipulatorsValues = cleanManipulators(manipulators);
   const activationRule = {
@@ -85,7 +78,7 @@ export function SublayerRule(
 export function AppRule(
   description: string,
   bundleIdentifier: string,
-  manipulators: ChainedOptionalDescription | ChainedOptionalDescription[]
+  manipulators: ManipulatorsInput
 ) {
   const manipulatorsValues = cleanManipulators(manipulators);
   const condition: FrontMostApplicationCondition = {
@@ -103,10 +96,10 @@ export function AppRule(
   };
 }
 
-function cleanManipulators(
-  manipulators: ChainedOptionalDescription | ChainedOptionalDescription[]
-): Manipulator[] {
-  const manipulatorsValues = isSigleManipulator(manipulators)
+function cleanManipulators(manipulators: ManipulatorsInput): Manipulator[] {
+  if (isManipulator(manipulators)) return [manipulators];
+
+  const manipulatorsValues = isChainedManipulator(manipulators)
     ? [manipulators]
     : manipulators;
 
