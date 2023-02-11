@@ -1,5 +1,6 @@
 import {
   AppRule,
+  email,
   from,
   left_ctrl,
   left_opt,
@@ -266,6 +267,50 @@ test("sublayer commands - complex activation", () => {
             value: 1,
           },
         ],
+      },
+    ],
+  });
+});
+
+test("email util fn", () => {
+  expect(email("me@me.co")).toEqual([
+    "m",
+    "e",
+    { from: "2", modifiers: { mandatory: ["left_shift"] } },
+    "m",
+    "e",
+    "period",
+    "c",
+    "o",
+  ]);
+});
+test("rule with email", () => {
+  expect(Rule("email", [from("a").to(email("a@b.c"))])).toEqual({
+    description: "email",
+    manipulators: [
+      {
+        from: {
+          key_code: "a",
+        },
+        to: [
+          {
+            key_code: "a",
+          },
+          {
+            key_code: "2",
+            modifiers: ["left_shift"],
+          },
+          {
+            key_code: "b",
+          },
+          {
+            key_code: "period",
+          },
+          {
+            key_code: "c",
+          },
+        ],
+        type: "basic",
       },
     ],
   });
