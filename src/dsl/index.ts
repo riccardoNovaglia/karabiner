@@ -33,13 +33,34 @@ export function Rule(
     manipulators: manipulatorsValues,
   };
 }
+export function AppRule(
+  description: string,
+  bundleIdentifier: string,
+  manipulators: ManipulatorsInput
+) {
+  const { manipulators: baseManipulators } = Rule(description, manipulators);
+
+  const condition: FrontMostApplicationCondition = {
+    type: "frontmost_application_if",
+    bundle_identifiers: [bundleIdentifier],
+  };
+  const updatedManipulators = baseManipulators.map((manipulator) => ({
+    ...manipulator,
+    conditions: [condition],
+  }));
+
+  return {
+    description,
+    manipulators: updatedManipulators,
+  };
+}
 
 export function SublayerRule(
   description: string,
   activationKeys: KeyCode | ModdedKeyCode,
   manipulators: ManipulatorsInput
 ): KarabinerRules {
-  const manipulatorsValues = cleanManipulators(manipulators);
+  const { manipulators: baseManipulators } = Rule(description, manipulators);
   const activationRule = {
     type: "basic",
     from: fff(activationKeys),
@@ -65,27 +86,6 @@ export function SublayerRule(
     name: description,
     value: 1,
   };
-  const updatedManipulators = manipulatorsValues.map((manipulator) => ({
-    ...manipulator,
-    conditions: [condition],
-  }));
-
-  return {
-    description,
-    manipulators: [activationRule, ...updatedManipulators],
-  };
-}
-export function AppRule(
-  description: string,
-  bundleIdentifier: string,
-  manipulators: ManipulatorsInput
-) {
-  const { manipulators: baseManipulators } = Rule(description, manipulators);
-
-  const condition: FrontMostApplicationCondition = {
-    type: "frontmost_application_if",
-    bundle_identifiers: [bundleIdentifier],
-  };
   const updatedManipulators = baseManipulators.map((manipulator) => ({
     ...manipulator,
     conditions: [condition],
@@ -93,7 +93,7 @@ export function AppRule(
 
   return {
     description,
-    manipulators: updatedManipulators,
+    manipulators: [activationRule, ...updatedManipulators],
   };
 }
 
