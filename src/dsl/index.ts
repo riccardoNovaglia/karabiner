@@ -43,7 +43,7 @@ export function AppRule(
     type: "frontmost_application_if",
     bundle_identifiers: [bundleIdentifier],
   };
-  return FilteredRule(description, condition, manipulators);
+  return FilteredRule(description, manipulators, condition);
 }
 
 export function SublayerRule(
@@ -51,7 +51,6 @@ export function SublayerRule(
   activationKeys: KeyCode | ModdedKeyCode,
   manipulators: ManipulatorsInput
 ): KarabinerRules {
-  const { manipulators: baseManipulators } = Rule(description, manipulators);
   const activationRule = {
     type: "basic",
     from: fff(activationKeys),
@@ -77,21 +76,14 @@ export function SublayerRule(
     name: description,
     value: 1,
   };
-  const updatedManipulators = baseManipulators.map((manipulator) => ({
-    ...manipulator,
-    conditions: [condition],
-  }));
-
-  return {
-    description,
-    manipulators: [activationRule, ...updatedManipulators],
-  };
+  return FilteredRule(description, manipulators, condition, [activationRule]);
 }
 
 function FilteredRule(
   description: string,
+  manipulators: ManipulatorsInput,
   conditions: Conditions,
-  manipulators: ManipulatorsInput
+  extraManipulator: Manipulator[] = []
 ) {
   const { manipulators: baseManipulators } = Rule(description, manipulators);
 
@@ -102,7 +94,7 @@ function FilteredRule(
 
   return {
     description,
-    manipulators: updatedManipulators,
+    manipulators: [...extraManipulator, ...updatedManipulators],
   };
 }
 
