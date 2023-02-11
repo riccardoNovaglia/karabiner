@@ -111,23 +111,27 @@ function cleanManipulators(
 }
 
 interface ChainedTo {
-  to: (to: KeyCode | ModdedKeyCode | Shell) => ChainedOptionalDescription;
+  to: (
+    to: KeyCode | KeyCode[] | ModdedKeyCode | Shell
+  ) => ChainedOptionalDescription;
 }
 export function from(from: KeyCode | ModdedKeyCode): ChainedTo {
   const f = fff(from);
 
   return {
-    to: (to: KeyCode | ModdedKeyCode | Shell): ChainedOptionalDescription => {
+    to: (
+      to: KeyCode | KeyCode[] | ModdedKeyCode | Shell
+    ): ChainedOptionalDescription => {
       const t = ttt(to);
       return {
         type: "basic",
         from: f,
-        to: [t],
+        to: Array.isArray(t) ? t : [t],
         withDescription: (description: string): Manipulator => {
           return {
             type: "basic",
             from: f,
-            to: [t],
+            to: Array.isArray(t) ? t : [t],
             description: description,
           };
         },
@@ -195,12 +199,17 @@ function fff(from: KeyCode | ModdedKeyCode): From {
     return { key_code: from.from, modifiers: from.modifiers };
   }
 }
-function isShell(to: KeyCode | ModdedKeyCode | Shell): to is Shell {
+function isShell(to: KeyCode | KeyCode[] | ModdedKeyCode | Shell): to is Shell {
   return to["shell_command"] !== undefined;
 }
-function ttt(to: KeyCode | ModdedKeyCode | Shell): To {
+function isMultiKeyCode(input: unknown): input is KeyCode[] {
+  return Array.isArray(input) && input.every((key) => isKeyCode(key));
+}
+function ttt(to: KeyCode | KeyCode[] | ModdedKeyCode | Shell): To | To[] {
   if (isShell(to)) {
     return to;
+  } else if (isMultiKeyCode(to)) {
+    return to.map((key_code) => ({ key_code }));
   } else if (isKeyCode(to)) {
     return { key_code: to };
   } else {
