@@ -72,6 +72,18 @@ test("to sequence", () => {
     ],
   });
 });
+test("to sequence of simple and modded keys", () => {
+  expect(Rule("a to bc", from("a").to(["b", left_shift("c")]))).toEqual({
+    description: "a to bc",
+    manipulators: [
+      {
+        from: { key_code: "a" },
+        to: [{ key_code: "b" }, { key_code: "c", modifiers: ["left_shift"] }],
+        type: "basic",
+      },
+    ],
+  });
+});
 
 test("description", () => {
   expect(Rule("a b", from("a").to("b").withDescription("a to b"))).toEqual({

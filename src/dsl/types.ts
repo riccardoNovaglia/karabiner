@@ -1,7 +1,8 @@
 import { KeyCode, Manipulator } from "../types";
 import { ModdedKeyCode } from "./modifiers";
 
-export type ToInput = KeyCode | ModdedKeyCode | Shell | KeyCode[];
+export type SingleToInput = KeyCode | ModdedKeyCode | Shell;
+export type ToInput = SingleToInput | SingleToInput[];
 export interface ChainedTo {
   to: (to: ToInput) => ChainedOptionalDescription;
 }

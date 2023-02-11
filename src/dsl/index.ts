@@ -8,9 +8,15 @@ import {
   To,
   VariableCondition,
 } from "../types";
-import { isChainedManipulator, isKeyCode, isManipulator, isMultiKeyCode, isShell } from "./guards";
+import { isChainedManipulator, isKeyCode, isManipulator, isShell, isSingleInput } from "./guards";
 import { ModdedKeyCode } from "./modifiers";
-import { ChainedOptionalDescription, ChainedTo, ManipulatorsInput, ToInput } from "./types";
+import {
+  ChainedOptionalDescription,
+  ChainedTo,
+  ManipulatorsInput,
+  SingleToInput,
+  ToInput,
+} from "./types";
 
 export function Rule(description: string, manipulators: ManipulatorsInput): KarabinerRules {
   const manipulatorsValues = cleanManipulators(manipulators);
@@ -129,10 +135,14 @@ function fff(from: KeyCode | ModdedKeyCode): From {
 
 // To (input) to To (output)
 function ttt(to: ToInput): To | To[] {
+  if (isSingleInput(to)) return translateTo(to);
+  else {
+    return to.map((singleTo) => translateTo(singleTo));
+  }
+}
+function translateTo(to: SingleToInput): To {
   if (isKeyCode(to)) {
     return { key_code: to };
-  } else if (isMultiKeyCode(to)) {
-    return to.map((key_code) => ({ key_code }));
   } else if (isShell(to)) {
     return to;
   } else {

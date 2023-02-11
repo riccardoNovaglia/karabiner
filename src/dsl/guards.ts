@@ -1,16 +1,21 @@
 import { KeyCode, keyCodes, Manipulator } from "../types";
-import { ChainedOptionalDescription, ManipulatorsInput, Shell, ToInput } from "./types";
+import {
+  ChainedOptionalDescription,
+  ManipulatorsInput,
+  Shell,
+  ToInput,
+  SingleToInput,
+} from "./types";
 
 export function isKeyCode(from: unknown): from is KeyCode {
   return typeof from === "string" && !!keyCodes.find((code) => code === from);
 }
+export function isSingleInput(to: SingleToInput | SingleToInput[]): to is SingleToInput {
+  return !Array.isArray(to);
+}
 
 export function isShell(to: ToInput): to is Shell {
   return to["shell_command"] !== undefined;
-}
-
-export function isMultiKeyCode(input: unknown): input is KeyCode[] {
-  return Array.isArray(input) && input.every((key) => isKeyCode(key));
 }
 
 export function isManipulator(manipulators: ManipulatorsInput): manipulators is Manipulator {
