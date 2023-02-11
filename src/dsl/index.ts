@@ -7,7 +7,7 @@ import {
   Manipulator,
   To,
   VariableCondition,
-} from "../types";
+} from "../k/types";
 import { isChainedManipulator, isKeyCode, isManipulator, isShell, isSingleInput } from "./guards";
 import { ModdedKeyCode } from "./modifiers";
 import {

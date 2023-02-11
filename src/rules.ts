@@ -12,8 +12,8 @@ import {
   shell,
 } from "./dsl";
 import { privateRules } from "./private";
-import { KarabinerRules } from "./types";
-import { app as app_, createHyperSubLayers } from "./utils";
+import { KarabinerRules } from "./k/types";
+import { app as app_, createHyperSubLayers } from "./k/utils";
 
 const rules: KarabinerRules[] = [
   // Define the Hyper key itself

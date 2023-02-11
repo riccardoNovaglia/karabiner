@@ -1,4 +1,4 @@
-import { KeyCode, keyCodes, Manipulator } from "../types";
+import { KeyCode, keyCodes, Manipulator } from "../k/types";
 import {
   ChainedOptionalDescription,
   ManipulatorsInput,

@@ -1,4 +1,4 @@
-import { KeyCode, Modifiers, ModKeys } from "../types";
+import { KeyCode, Modifiers, ModKeys } from "../k/types";
 import { Shell } from "./types";
 
 export type ModdedKeyCode = {

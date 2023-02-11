@@ -1,4 +1,4 @@
-import { KeyCode, Manipulator } from "../types";
+import { KeyCode, Manipulator } from "../k/types";
 import { ModdedKeyCode } from "./modifiers";
 
 export type SingleToInput = KeyCode | ModdedKeyCode | Shell;
