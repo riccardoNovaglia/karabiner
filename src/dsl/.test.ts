@@ -1,14 +1,13 @@
 import {
-  Rule,
+  AppRule,
   from,
   left_ctrl,
   left_opt,
   left_shift,
-  frontmostApp,
+  multiMod,
+  Rule,
   shell,
   SublayerRule,
-  AppRule,
-  multiMod,
 } from ".";
 
 test("simplest", () => {

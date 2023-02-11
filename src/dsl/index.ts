@@ -1,4 +1,5 @@
 import {
+  Conditions,
   From,
   FrontMostApplicationCondition,
   KarabinerRules,
@@ -38,21 +39,11 @@ export function AppRule(
   bundleIdentifier: string,
   manipulators: ManipulatorsInput
 ) {
-  const { manipulators: baseManipulators } = Rule(description, manipulators);
-
   const condition: FrontMostApplicationCondition = {
     type: "frontmost_application_if",
     bundle_identifiers: [bundleIdentifier],
   };
-  const updatedManipulators = baseManipulators.map((manipulator) => ({
-    ...manipulator,
-    conditions: [condition],
-  }));
-
-  return {
-    description,
-    manipulators: updatedManipulators,
-  };
+  return FilteredRule(description, condition, manipulators);
 }
 
 export function SublayerRule(
@@ -94,6 +85,24 @@ export function SublayerRule(
   return {
     description,
     manipulators: [activationRule, ...updatedManipulators],
+  };
+}
+
+function FilteredRule(
+  description: string,
+  conditions: Conditions,
+  manipulators: ManipulatorsInput
+) {
+  const { manipulators: baseManipulators } = Rule(description, manipulators);
+
+  const updatedManipulators = baseManipulators.map((manipulator) => ({
+    ...manipulator,
+    conditions: [conditions],
+  }));
+
+  return {
+    description,
+    manipulators: updatedManipulators,
   };
 }
 

@@ -1,4 +1,4 @@
-import { KeyCode, Manipulator } from "../types";
+import { KeyCode, keyCodes, Manipulator } from "../types";
 import {
   ChainedOptionalDescription,
   ManipulatorsInput,
@@ -7,7 +7,7 @@ import {
 } from "./types";
 
 export function isKeyCode(from: unknown): from is KeyCode {
-  return typeof from === "string";
+  return typeof from === "string" && !!keyCodes.find((code) => code === from);
 }
 
 export function isShell(to: ToInput): to is Shell {

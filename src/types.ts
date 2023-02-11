@@ -18,7 +18,7 @@ export interface Parameters {
   "basic.simultaneous_threshold_milliseconds"?: number;
 }
 
-type Conditions =
+export type Conditions =
   | FrontMostApplicationCondition
   | DeviceCondition
   | KeyboardTypeCondition
@@ -122,288 +122,291 @@ export interface MouseKey {
   speed_multiplier?: number;
 }
 
-export type ModKeys =
-  | "left_control"
-  | "left_shift"
-  | "left_option"
-  | "left_command"
-  | "right_control"
-  | "right_shift"
-  | "right_option"
-  | "right_command"
-  | "fn";
+const modKeys = [
+  "left_control",
+  "left_shift",
+  "left_option",
+  "left_command",
+  "right_control",
+  "right_shift",
+  "right_option",
+  "right_command",
+  "fn",
+] as const;
+export type ModKeys = typeof modKeys[number];
 
-export type KeyCode =
-  | ModKeys
-  | "fn"
-  | "caps_lock"
-  | "return_or_enter"
-  | "escape"
-  | "delete_or_backspace"
-  | "delete_forward"
-  | "tab"
-  | "spacebar"
-  | "hyphen"
-  | "equal_sign"
-  | "open_bracket"
-  | "close_bracket"
-  | "backslash"
-  | "non_us_pound"
-  | "semicolon"
-  | "quote"
-  | "grave_accent_and_tilde"
-  | "comma"
-  | "period"
-  | "slash"
-  | "non_us_backslash"
-  | "up_arrow"
-  | "down_arrow"
-  | "left_arrow"
-  | "right_arrow"
-  | "page_up"
-  | "page_down"
-  | "home"
-  | "end"
-  | "a"
-  | "b"
-  | "c"
-  | "d"
-  | "e"
-  | "f"
-  | "g"
-  | "h"
-  | "i"
-  | "j"
-  | "k"
-  | "l"
-  | "m"
-  | "n"
-  | "o"
-  | "p"
-  | "q"
-  | "r"
-  | "s"
-  | "t"
-  | "u"
-  | "v"
-  | "w"
-  | "x"
-  | "y"
-  | "z"
-  | "1"
-  | "2"
-  | "3"
-  | "4"
-  | "5"
-  | "6"
-  | "7"
-  | "8"
-  | "9"
-  | "0"
-  | "f1"
-  | "f2"
-  | "f3"
-  | "f4"
-  | "f5"
-  | "f6"
-  | "f7"
-  | "f8"
-  | "f9"
-  | "f10"
-  | "f11"
-  | "f12"
-  | "f13"
-  | "f14"
-  | "f15"
-  | "f16"
-  | "f17"
-  | "f18"
-  | "f19"
-  | "f20"
-  | "f21"
+export const keyCodes = [
+  ...modKeys,
+  "caps_lock",
+  "return_or_enter",
+  "escape",
+  "delete_or_backspace",
+  "delete_forward",
+  "tab",
+  "spacebar",
+  "hyphen",
+  "equal_sign",
+  "open_bracket",
+  "close_bracket",
+  "backslash",
+  "non_us_pound",
+  "semicolon",
+  "quote",
+  "grave_accent_and_tilde",
+  "comma",
+  "period",
+  "slash",
+  "non_us_backslash",
+  "up_arrow",
+  "down_arrow",
+  "left_arrow",
+  "right_arrow",
+  "page_up",
+  "page_down",
+  "home",
+  "end",
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "q",
+  "r",
+  "s",
+  "t",
+  "u",
+  "v",
+  "w",
+  "x",
+  "y",
+  "z",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "0",
+  "f1",
+  "f2",
+  "f3",
+  "f4",
+  "f5",
+  "f6",
+  "f7",
+  "f8",
+  "f9",
+  "f10",
+  "f11",
+  "f12",
+  "f13",
+  "f14",
+  "f15",
+  "f16",
+  "f17",
+  "f18",
+  "f19",
+  "f20",
+  "f21",
   //   not_to: true
-  | "f22"
+  "f22",
   //   not_to: true
-  | "f23"
+  "f23",
   //   not_to: true
-  | "f24"
+  "f24",
   //   not_to: true
-  | "display_brightness_decrement"
+  "display_brightness_decrement",
   //   not_from: true
-  | "display_brightness_increment"
+  "display_brightness_increment",
   //   not_from: true
-  | "mission_control"
+  "mission_control",
   //   not_from: true
-  | "launchpad"
+  "launchpad",
   //   not_from: true
-  | "dashboard"
+  "dashboard",
   //   not_from: true
-  | "illumination_decrement"
+  "illumination_decrement",
   //   not_from: true
-  | "illumination_increment"
+  "illumination_increment",
   //   not_from: true
-  | "rewind"
+  "rewind",
   //   not_from: true
-  | "play_or_pause"
+  "play_or_pause",
   //   not_from: true
-  | "fastforward"
+  "fastforward",
   //   not_from: true
-  | "mute"
-  | "volume_decrement"
-  | "volume_increment"
-  | "eject"
+  "mute",
+  "volume_decrement",
+  "volume_increment",
+  "eject",
   //   not_from: true
-  | "apple_display_brightness_decrement"
+  "apple_display_brightness_decrement",
   //   not_from: true
-  | "apple_display_brightness_increment"
+  "apple_display_brightness_increment",
   //   not_from: true
-  | "apple_top_case_display_brightness_decrement"
+  "apple_top_case_display_brightness_decrement",
   //   not_from: true
-  | "apple_top_case_display_brightness_increment"
+  "apple_top_case_display_brightness_increment",
   //   not_from: true
-  | "keypad_num_lock"
-  | "keypad_slash"
-  | "keypad_asterisk"
-  | "keypad_hyphen"
-  | "keypad_plus"
-  | "keypad_enter"
-  | "keypad_1"
-  | "keypad_2"
-  | "keypad_3"
-  | "keypad_4"
-  | "keypad_5"
-  | "keypad_6"
-  | "keypad_7"
-  | "keypad_8"
-  | "keypad_9"
-  | "keypad_0"
-  | "keypad_period"
-  | "keypad_equal_sign"
-  | "keypad_comma"
-  | "vk_none"
+  "keypad_num_lock",
+  "keypad_slash",
+  "keypad_asterisk",
+  "keypad_hyphen",
+  "keypad_plus",
+  "keypad_enter",
+  "keypad_1",
+  "keypad_2",
+  "keypad_3",
+  "keypad_4",
+  "keypad_5",
+  "keypad_6",
+  "keypad_7",
+  "keypad_8",
+  "keypad_9",
+  "keypad_0",
+  "keypad_period",
+  "keypad_equal_sign",
+  "keypad_comma",
+  "vk_none",
   //   not_from: true
-  | "print_screen"
-  | "scroll_lock"
-  | "pause"
-  | "insert"
-  | "application"
-  | "help"
-  | "power"
-  | "execute"
+  "print_screen",
+  "scroll_lock",
+  "pause",
+  "insert",
+  "application",
+  "help",
+  "power",
+  "execute",
   //   not_to: true
-  | "menu"
+  "menu",
   //   not_to: true
-  | "select"
+  "select",
   //   not_to: true
-  | "stop"
+  "stop",
   //   not_to: true
-  | "again"
+  "again",
   //   not_to: true
-  | "undo"
+  "undo",
   //   not_to: true
-  | "cut"
+  "cut",
   //   not_to: true
-  | "copy"
+  "copy",
   //   not_to: true
-  | "paste"
+  "paste",
   //   not_to: true
-  | "find"
+  "find",
   //   not_to: true
-  | "international1"
-  | "international2"
+  "international1",
+  "international2",
   //   not_to: true
-  | "international3"
-  | "international4"
+  "international3",
+  "international4",
   //   not_to: true
-  | "international5"
+  "international5",
   //   not_to: true
-  | "international6"
+  "international6",
   //   not_to: true
-  | "international7"
+  "international7",
   //   not_to: true
-  | "international8"
+  "international8",
   //   not_to: true
-  | "international9"
+  "international9",
   //   not_to: true
-  | "lang1"
-  | "lang2"
-  | "lang3"
+  "lang1",
+  "lang2",
+  "lang3",
   //   not_to: true
-  | "lang4"
+  "lang4",
   //   not_to: true
-  | "lang5"
+  "lang5",
   //   not_to: true
-  | "lang6"
+  "lang6",
   //   not_to: true
-  | "lang7"
+  "lang7",
   //   not_to: true
-  | "lang8"
+  "lang8",
   //   not_to: true
-  | "lang9"
+  "lang9",
   //   not_to: true
-  | "japanese_eisuu"
-  | "japanese_kana"
-  | "japanese_pc_nfer"
+  "japanese_eisuu",
+  "japanese_kana",
+  "japanese_pc_nfer",
   //   not_to: true
-  | "japanese_pc_xfer"
+  "japanese_pc_xfer",
   //   not_to: true
-  | "japanese_pc_katakana"
+  "japanese_pc_katakana",
   //   not_to: true
-  | "keypad_equal_sign_as400"
+  "keypad_equal_sign_as400",
   //   not_to: true
-  | "locking_caps_lock"
+  "locking_caps_lock",
   //   not_to: true
-  | "locking_num_lock"
+  "locking_num_lock",
   //   not_to: true
-  | "locking_scroll_lock"
+  "locking_scroll_lock",
   //   not_to: true
-  | "alternate_erase"
+  "alternate_erase",
   //   not_to: true
-  | "sys_req_or_attention"
+  "sys_req_or_attention",
   //   not_to: true
-  | "cancel"
+  "cancel",
   //   not_to: true
-  | "clear"
+  "clear",
   //   not_to: true
-  | "prior"
+  "prior",
   //   not_to: true
-  | "return"
+  "return",
   //   not_to: true
-  | "separator"
+  "separator",
   //   not_to: true
-  | "out"
+  "out",
   //   not_to: true
-  | "oper"
+  "oper",
   //   not_to: true
-  | "clear_or_again"
+  "clear_or_again",
   //   not_to: true
-  | "cr_sel_or_props"
+  "cr_sel_or_props",
   //   not_to: true
-  | "ex_sel"
+  "ex_sel",
   //   not_to: true
-  | "left_alt"
-  | "left_gui"
-  | "right_alt"
-  | "right_gui"
-  | "vk_consumer_brightness_down"
+  "left_alt",
+  "left_gui",
+  "right_alt",
+  "right_gui",
+  "vk_consumer_brightness_down",
   //   not_from: true
-  | "vk_consumer_brightness_up"
+  "vk_consumer_brightness_up",
   //   not_from: true
-  | "vk_mission_control"
+  "vk_mission_control",
   //   not_from: true
-  | "vk_launchpad"
+  "vk_launchpad",
   //   not_from: true
-  | "vk_dashboard"
+  "vk_dashboard",
   //   not_from: true
-  | "vk_consumer_illumination_down"
+  "vk_consumer_illumination_down",
   //   not_from: true
-  | "vk_consumer_illumination_up"
+  "vk_consumer_illumination_up",
   //   not_from: true
-  | "vk_consumer_previous"
+  "vk_consumer_previous",
   //   not_from: true
-  | "vk_consumer_play"
+  "vk_consumer_play",
   //   not_from: true
-  | "vk_consumer_next"
+  "vk_consumer_next",
   //   not_from: true
-  | "volume_down"
-  | "volume_up";
+  "volume_down",
+  "volume_up",
+] as const;
+export type KeyCode = typeof keyCodes[number];

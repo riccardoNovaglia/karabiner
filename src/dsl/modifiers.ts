@@ -41,10 +41,6 @@ export function multiMod(from: KeyCode, mods: ModKeys[]): ModdedKeyCode {
   };
 }
 
-export function frontmostApp(bundle_identifier: string) {
-  return bundle_identifier;
-}
-
 export function shell(command: string): Shell {
   return { shell_command: command };
 }
