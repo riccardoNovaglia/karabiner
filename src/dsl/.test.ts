@@ -4,7 +4,7 @@ import {
   left_ctrl,
   left_opt,
   left_shift,
-  multiMod,
+  modKey,
   Rule,
   shell,
   SublayerRule,
@@ -41,7 +41,7 @@ test("with modi from", () => {
 });
 test("with multi modi from", () => {
   expect(
-    Rule("multi", from(multiMod("a", ["left_control", "left_shift"])).to("b"))
+    Rule("multi", from(modKey("a", ["left_control", "left_shift"])).to("b"))
   ).toEqual({
     description: "multi",
     manipulators: [

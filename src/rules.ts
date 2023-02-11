@@ -1,14 +1,17 @@
 import {
   AppRule,
   from,
+  hyper,
   left_ctrl,
   left_opt,
   left_shift,
-  multiMod,
+  modKey,
+  noice,
   right_command,
   Rule,
   shell,
 } from "./dsl";
+import { privateRules } from "./private";
 import { KarabinerRules } from "./types";
 import { app as app_, createHyperSubLayers } from "./utils";
 
@@ -77,17 +80,15 @@ const easyVolume = [
 ];
 const inAppRules = [
   AppRule("Zoom", "us.zoom.xos", [
-    from("f1").to(multiMod("a", ["left_control", "left_shift"])), // toggle audio
-    from("f2").to(multiMod("v", ["left_control", "left_shift"])), // toggle video
+    from("f1").to(modKey("a", ["left_control", "left_shift"])), // toggle audio
+    from("f2").to(modKey("v", ["left_control", "left_shift"])), // toggle video
     ...easyVolume,
   ]),
   AppRule("Meet", "safari", [
-    from("f1").to(multiMod("d", ["left_control", "left_shift"])), // toggle audio
-    from("f2").to(multiMod("e", ["left_control", "left_shift"])), // toggle video
-    from("grave_accent_and_tilde").to(
-      multiMod("m", ["left_control", "left_shift"])
-    ), // toggle self view
-    from("f5").to(multiMod("c", ["left_control", "left_shift"])), // toggle chat panel
+    from("f1").to(modKey("d", ["left_control", "left_shift"])), // toggle audio
+    from("f2").to(modKey("e", ["left_control", "left_shift"])), // toggle video
+    from("grave_accent_and_tilde").to(modKey("m", ["left_control", "left_shift"])), // toggle self view
+    from("f5").to(modKey("c", ["left_control", "left_shift"])), // toggle chat panel
     ...easyVolume,
   ]),
   AppRule("Spotify", "com.spotify.client", [
@@ -108,16 +109,28 @@ const openApps = [
   Rule("iterm", from(right_command("i")).to(app("iTerm2"))), // TODO: review?
   Rule("Spotify", from(right_command("y")).to(app("Spotify"))),
 ];
+const noiceHyperNavigate = [
+  Rule("Noice/Hyper navigate", [
+    from(noice("j")).to("left_arrow"),
+    from(noice("k")).to("down_arrow"),
+    from(noice("l")).to("right_arrow"),
+    from(noice("i")).to("up_arrow"),
+    // allow selecting with shift
+    from(hyper("j")).to(left_shift("left_arrow")),
+    from(hyper("k")).to(left_shift("down_arrow")),
+    from(hyper("l")).to(left_shift("right_arrow")),
+    from(hyper("i")).to(left_shift("up_arrow")),
+  ]),
+];
 export const myRules: KarabinerRules[] = [
   Rule("caps lock to escape", from("caps_lock").to("escape")),
   Rule("fn to right-control switch", from("caps_lock").to("escape")), // TODO: device filter?
-  Rule(
-    "Easy delete",
-    from(left_ctrl("delete_or_backspace")).to("delete_forward")
-  ),
+  Rule("Easy delete", from(left_ctrl("delete_or_backspace")).to("delete_forward")),
   Rule("Easy percent", from(left_opt("p")).to(left_shift("5"))),
   Rule("Pause on f8 by default", from("f8").to("play_or_pause")),
   Rule("Shift f8 to f8", from(left_shift("f8")).to("f8")),
   ...inAppRules,
   ...openApps,
+  ...noiceHyperNavigate,
+  ...privateRules,
 ];

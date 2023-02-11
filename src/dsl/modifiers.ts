@@ -5,41 +5,21 @@ export type ModdedKeyCode = {
   from: KeyCode;
   modifiers: Modifiers;
 };
-
-export function left_ctrl(from: KeyCode): ModdedKeyCode {
-  return {
-    from,
-    modifiers: { mandatory: ["left_control"] },
-  };
-}
-
-export function left_opt(from: KeyCode): ModdedKeyCode {
-  return {
-    from,
-    modifiers: { mandatory: ["left_option"] },
-  };
-}
-
-export function left_shift(from: KeyCode): ModdedKeyCode {
-  return {
-    from,
-    modifiers: { mandatory: ["left_shift"] },
-  };
-}
-
-export function right_command(from: KeyCode): ModdedKeyCode {
-  return {
-    from,
-    modifiers: { mandatory: ["right_command"] },
-  };
-}
-
-export function multiMod(from: KeyCode, mods: ModKeys[]): ModdedKeyCode {
+export function modKey(from: KeyCode, mods: ModKeys[]): ModdedKeyCode {
   return {
     from,
     modifiers: { mandatory: mods },
   };
 }
+export const left_ctrl = (k: KeyCode): ModdedKeyCode => modKey(k, ["left_control"]);
+export const left_opt = (k: KeyCode): ModdedKeyCode => modKey(k, ["left_option"]);
+export const left_shift = (k: KeyCode): ModdedKeyCode => modKey(k, ["left_shift"]);
+export const right_command = (k: KeyCode): ModdedKeyCode => modKey(k, ["right_command"]);
+
+export const noice = (key: KeyCode): ModdedKeyCode =>
+  modKey(key, ["left_command", "left_option", "left_control"]);
+export const hyper = (key: KeyCode): ModdedKeyCode =>
+  modKey(key, ["left_command", "left_option", "left_control", "left_shift"]);
 
 export function shell(command: string): Shell {
   return { shell_command: command };
