@@ -80,12 +80,13 @@ export function AppRule(
   bundleIdentifier: string,
   manipulators: ManipulatorsInput
 ) {
-  const manipulatorsValues = cleanManipulators(manipulators);
+  const { manipulators: baseManipulators } = Rule(description, manipulators);
+
   const condition: FrontMostApplicationCondition = {
     type: "frontmost_application_if",
     bundle_identifiers: [bundleIdentifier],
   };
-  const updatedManipulators = manipulatorsValues.map((manipulator) => ({
+  const updatedManipulators = baseManipulators.map((manipulator) => ({
     ...manipulator,
     conditions: [condition],
   }));
