@@ -18,6 +18,7 @@
   "scripts": {
     "build": "tsm src/index.ts",
     "watch": "nodemon --exec yarn build -e ts",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "pretty": "prettier -w src"
   }
 }

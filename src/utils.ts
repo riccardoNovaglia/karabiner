@@ -33,12 +33,7 @@ export function createHyperSubLayer(
       from: {
         key_code: sublayer_key,
         modifiers: {
-          mandatory: [
-            "left_command",
-            "left_control",
-            "left_shift",
-            "left_option",
-          ],
+          mandatory: ["left_command", "left_control", "left_shift", "left_option"],
         },
       },
       to_after_key_up: [
@@ -103,9 +98,9 @@ export function createHyperSubLayer(
 export function createHyperSubLayers(subLayers: {
   [key_code in KeyCode]?: HyperKeySublayer | LayerCommand;
 }): KarabinerRules[] {
-  const allSubLayerVariables = (
-    Object.keys(subLayers) as (keyof typeof subLayers)[]
-  ).map((sublayer_key) => generateSubLayerVariableName(sublayer_key));
+  const allSubLayerVariables = (Object.keys(subLayers) as (keyof typeof subLayers)[]).map(
+    (sublayer_key) => generateSubLayerVariableName(sublayer_key)
+  );
 
   return Object.entries(subLayers).map(([key, value]) =>
     "to" in value
@@ -119,12 +114,7 @@ export function createHyperSubLayers(subLayers: {
                 key_code: key as KeyCode,
                 modifiers: {
                   // Mandatory modifiers are *not* added to the "to" event
-                  mandatory: [
-                    "left_command",
-                    "left_control",
-                    "left_shift",
-                    "left_option",
-                  ],
+                  mandatory: ["left_command", "left_control", "left_shift", "left_option"],
                 },
               },
             },
@@ -132,11 +122,7 @@ export function createHyperSubLayers(subLayers: {
         }
       : {
           description: `Hyper Key sublayer "${key}"`,
-          manipulators: createHyperSubLayer(
-            key as KeyCode,
-            value,
-            allSubLayerVariables
-          ),
+          manipulators: createHyperSubLayer(key as KeyCode, value, allSubLayerVariables),
         }
   );
 }

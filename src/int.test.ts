@@ -8,8 +8,6 @@ test("generated and baseline are similar", () => {
       encoding: "utf8",
     })
   );
-  const defaultProfile = baselineConfig.profiles.find(
-    (profile) => profile.name === "Default"
-  );
+  const defaultProfile = baselineConfig.profiles.find((profile) => profile.name === "Default");
   const defaultRules = defaultProfile.complex_modifications.rules;
 });

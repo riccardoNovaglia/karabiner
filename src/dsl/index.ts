@@ -8,25 +8,11 @@ import {
   To,
   VariableCondition,
 } from "../types";
-import {
-  isChainedManipulator,
-  isKeyCode,
-  isManipulator,
-  isMultiKeyCode,
-  isShell,
-} from "./guards";
+import { isChainedManipulator, isKeyCode, isManipulator, isMultiKeyCode, isShell } from "./guards";
 import { ModdedKeyCode } from "./modifiers";
-import {
-  ChainedOptionalDescription,
-  ChainedTo,
-  ManipulatorsInput,
-  ToInput,
-} from "./types";
+import { ChainedOptionalDescription, ChainedTo, ManipulatorsInput, ToInput } from "./types";
 
-export function Rule(
-  description: string,
-  manipulators: ManipulatorsInput
-): KarabinerRules {
+export function Rule(description: string, manipulators: ManipulatorsInput): KarabinerRules {
   const manipulatorsValues = cleanManipulators(manipulators);
 
   return {
@@ -101,9 +87,7 @@ function FilteredRule(
 function cleanManipulators(manipulators: ManipulatorsInput): Manipulator[] {
   if (isManipulator(manipulators)) return [manipulators];
 
-  const manipulatorsValues = isChainedManipulator(manipulators)
-    ? [manipulators]
-    : manipulators;
+  const manipulatorsValues = isChainedManipulator(manipulators) ? [manipulators] : manipulators;
 
   return manipulatorsValues.map((manipulator) => {
     delete manipulator["withDescription"];

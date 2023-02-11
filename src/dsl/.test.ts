@@ -13,19 +13,12 @@ import {
 test("simplest", () => {
   expect(Rule("a b", from("a").to("b"))).toEqual({
     description: "a b",
-    manipulators: [
-      { from: { key_code: "a" }, to: [{ key_code: "b" }], type: "basic" },
-    ],
+    manipulators: [{ from: { key_code: "a" }, to: [{ key_code: "b" }], type: "basic" }],
   });
 });
 
 test("with modi from", () => {
-  expect(
-    Rule(
-      "easy delete",
-      from(left_ctrl("delete_or_backspace")).to("delete_forward")
-    )
-  ).toEqual({
+  expect(Rule("easy delete", from(left_ctrl("delete_or_backspace")).to("delete_forward"))).toEqual({
     description: "easy delete",
     manipulators: [
       {
@@ -40,9 +33,7 @@ test("with modi from", () => {
   });
 });
 test("with multi modi from", () => {
-  expect(
-    Rule("multi", from(modKey("a", ["left_control", "left_shift"])).to("b"))
-  ).toEqual({
+  expect(Rule("multi", from(modKey("a", ["left_control", "left_shift"])).to("b"))).toEqual({
     description: "multi",
     manipulators: [
       {
@@ -58,18 +49,16 @@ test("with multi modi from", () => {
 });
 
 test("with modi to", () => {
-  expect(Rule("easy percent", from(left_opt("p")).to(left_shift("5")))).toEqual(
-    {
-      description: "easy percent",
-      manipulators: [
-        {
-          from: { key_code: "p", modifiers: { mandatory: ["left_option"] } },
-          to: [{ key_code: "5", modifiers: ["left_shift"] }],
-          type: "basic",
-        },
-      ],
-    }
-  );
+  expect(Rule("easy percent", from(left_opt("p")).to(left_shift("5")))).toEqual({
+    description: "easy percent",
+    manipulators: [
+      {
+        from: { key_code: "p", modifiers: { mandatory: ["left_option"] } },
+        to: [{ key_code: "5", modifiers: ["left_shift"] }],
+        type: "basic",
+      },
+    ],
+  });
 });
 test("to sequence", () => {
   expect(Rule("a to bc", from("a").to(["b", "c"]))).toEqual({
@@ -123,9 +112,7 @@ test("frontmost app - nicer", () => {
 });
 
 test("multiple manipulators", () => {
-  expect(
-    AppRule("Zoom", "us.zoom.xos", [from("f1").to("f2"), from("a").to("b")])
-  ).toEqual({
+  expect(AppRule("Zoom", "us.zoom.xos", [from("f1").to("f2"), from("a").to("b")])).toEqual({
     description: "Zoom",
     manipulators: [
       {
