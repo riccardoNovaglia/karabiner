@@ -9,7 +9,7 @@ import {
   SublayerRule,
   AppRule,
   multiMod,
-} from "./dsl";
+} from ".";
 
 test("simplest", () => {
   expect(Rule("a b", from("a").to("b"))).toEqual({

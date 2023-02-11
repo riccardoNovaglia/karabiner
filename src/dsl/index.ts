@@ -6,15 +6,15 @@ import {
   Manipulator,
   To,
   VariableCondition,
-} from "./types";
+} from "../types";
 import {
   isKeyCode,
   isMultiKeyCode,
   isShell,
   isSigleManipulator,
-} from "./_dsl/guards";
-import { ModdedKeyCode } from "./_dsl/modifiers";
-import { ChainedOptionalDescription, ChainedTo, ToInput } from "./_dsl/types";
+} from "./guards";
+import { ModdedKeyCode } from "./modifiers";
+import { ChainedOptionalDescription, ChainedTo, ToInput } from "./types";
 
 export function Rule(
   description: string,
@@ -161,4 +161,4 @@ function ttt(to: ToInput): To | To[] {
   }
 }
 
-export * from "./_dsl/modifiers";
+export * from "./modifiers";
