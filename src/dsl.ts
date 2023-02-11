@@ -4,11 +4,17 @@ import {
   KarabinerRules,
   KeyCode,
   Manipulator,
-  Modifiers,
-  ModKeys,
   To,
   VariableCondition,
 } from "./types";
+import {
+  isKeyCode,
+  isMultiKeyCode,
+  isShell,
+  isSigleManipulator,
+} from "./_dsl/guards";
+import { ModdedKeyCode } from "./_dsl/modifiers";
+import { ChainedOptionalDescription, ChainedTo, ToInput } from "./_dsl/types";
 
 export function Rule(
   description: string,
@@ -110,18 +116,11 @@ function cleanManipulators(
   });
 }
 
-interface ChainedTo {
-  to: (
-    to: KeyCode | KeyCode[] | ModdedKeyCode | Shell
-  ) => ChainedOptionalDescription;
-}
 export function from(from: KeyCode | ModdedKeyCode): ChainedTo {
   const f = fff(from);
 
   return {
-    to: (
-      to: KeyCode | KeyCode[] | ModdedKeyCode | Shell
-    ): ChainedOptionalDescription => {
+    to: (to: ToInput): ChainedOptionalDescription => {
       const t = ttt(to);
       return {
         type: "basic",
@@ -140,58 +139,7 @@ export function from(from: KeyCode | ModdedKeyCode): ChainedTo {
   };
 }
 
-type ChainedOptionalDescription = Manipulator & {
-  withDescription?: (description: string) => Manipulator;
-};
-
-export function frontmostApp(bundle_identifier: string) {
-  return bundle_identifier;
-}
-
-type ModdedKeyCode = {
-  from: KeyCode;
-  modifiers: Modifiers;
-};
-export function left_ctrl(from: KeyCode): ModdedKeyCode {
-  return {
-    from,
-    modifiers: { mandatory: ["left_control"] },
-  };
-}
-export function left_opt(from: KeyCode): ModdedKeyCode {
-  return {
-    from,
-    modifiers: { mandatory: ["left_option"] },
-  };
-}
-export function left_shift(from: KeyCode): ModdedKeyCode {
-  return {
-    from,
-    modifiers: { mandatory: ["left_shift"] },
-  };
-}
-export function right_command(from: KeyCode): ModdedKeyCode {
-  return {
-    from,
-    modifiers: { mandatory: ["right_command"] },
-  };
-}
-export function multiMod(from: KeyCode, mods: ModKeys[]): ModdedKeyCode {
-  return {
-    from,
-    modifiers: { mandatory: mods },
-  };
-}
-type Shell = {
-  shell_command: string;
-};
-export function shell(command: string): Shell {
-  return { shell_command: command };
-}
-
-function isKeyCode(from: unknown): from is KeyCode {
-  return typeof from === "string";
-}
+// From (output) from From (input)
 function fff(from: KeyCode | ModdedKeyCode): From {
   if (isKeyCode(from)) {
     return { key_code: from };
@@ -199,26 +147,18 @@ function fff(from: KeyCode | ModdedKeyCode): From {
     return { key_code: from.from, modifiers: from.modifiers };
   }
 }
-function isShell(to: KeyCode | KeyCode[] | ModdedKeyCode | Shell): to is Shell {
-  return to["shell_command"] !== undefined;
-}
-function isMultiKeyCode(input: unknown): input is KeyCode[] {
-  return Array.isArray(input) && input.every((key) => isKeyCode(key));
-}
-function ttt(to: KeyCode | KeyCode[] | ModdedKeyCode | Shell): To | To[] {
-  if (isShell(to)) {
-    return to;
+
+// To (input) to To (output)
+function ttt(to: ToInput): To | To[] {
+  if (isKeyCode(to)) {
+    return { key_code: to };
   } else if (isMultiKeyCode(to)) {
     return to.map((key_code) => ({ key_code }));
-  } else if (isKeyCode(to)) {
-    return { key_code: to };
+  } else if (isShell(to)) {
+    return to;
   } else {
     return { key_code: to.from, modifiers: to.modifiers.mandatory };
   }
 }
 
-function isSigleManipulator(
-  manipulators: ChainedOptionalDescription | ChainedOptionalDescription[]
-): manipulators is ChainedOptionalDescription {
-  return !Array.isArray(manipulators);
-}
+export * from "./_dsl/modifiers";
