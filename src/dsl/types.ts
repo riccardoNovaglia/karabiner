@@ -19,3 +19,6 @@ export type ManipulatorsInput =
 export type Shell = {
   shell_command: string;
 };
+export type Combo = {
+  combo: KeyCode[];
+};

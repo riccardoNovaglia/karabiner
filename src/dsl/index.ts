@@ -8,11 +8,19 @@ import {
   To,
   VariableCondition,
 } from "../k/types";
-import { isChainedManipulator, isKeyCode, isManipulator, isShell, isSingleInput } from "./guards";
+import {
+  isChainedManipulator,
+  isCombo,
+  isKeyCode,
+  isManipulator,
+  isShell,
+  isSingleInput,
+} from "./guards";
 import { ModdedKeyCode } from "./modifiers";
 import {
   ChainedOptionalDescription,
   ChainedTo,
+  Combo,
   ManipulatorsInput,
   SingleToInput,
   ToInput,
@@ -104,7 +112,7 @@ function cleanManipulators(manipulators: ManipulatorsInput): Manipulator[] {
   });
 }
 
-export function from(from: KeyCode | ModdedKeyCode): ChainedTo {
+export function from(from: KeyCode | ModdedKeyCode | Combo): ChainedTo {
   const f = fff(from);
 
   return {
@@ -128,9 +136,20 @@ export function from(from: KeyCode | ModdedKeyCode): ChainedTo {
 }
 
 // From (output) from From (input)
-function fff(from: KeyCode | ModdedKeyCode): From {
+function fff(from: KeyCode | ModdedKeyCode | Combo): From {
   if (isKeyCode(from)) {
     return { key_code: from };
+  } else if (isCombo(from)) {
+    const simultaneous = from.combo.map((key_code) => ({ key_code }));
+    return {
+      simultaneous,
+      simultaneous_options: {
+        detect_key_down_uninterruptedly: true,
+        key_down_order: "strict",
+        key_up_order: "strict_inverse",
+        key_up_when: "any",
+      },
+    };
   } else {
     return { key_code: from.from, modifiers: from.modifiers };
   }

@@ -1,5 +1,5 @@
 import { KeyCode, Modifiers, ModKeys } from "../k/types";
-import { Shell } from "./types";
+import { Combo, Shell } from "./types";
 
 export type ModdedKeyCode = {
   from: KeyCode;
@@ -21,6 +21,10 @@ export const noice = (key: KeyCode): ModdedKeyCode =>
   modKey(key, ["left_command", "left_option", "left_control"]);
 export const hyper = (key: KeyCode): ModdedKeyCode =>
   modKey(key, ["left_command", "left_option", "left_control", "left_shift"]);
+
+export const combo = (from: KeyCode[]): Combo => ({
+  combo: from,
+});
 
 export function shell(command: string): Shell {
   return { shell_command: command };
