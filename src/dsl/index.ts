@@ -38,6 +38,9 @@ export function AppRule(
   return FilteredRule(description, manipulators, condition);
 }
 
+// Doesn't quite work
+// needs to still trigger on key alone
+// Doesn't seem to open files
 export function SublayerRule(
   description: string,
   activationKeys: KeyCode | ModdedKeyCode,

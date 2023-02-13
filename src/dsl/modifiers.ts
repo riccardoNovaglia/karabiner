@@ -12,6 +12,7 @@ export function modKey(from: KeyCode, mods: ModKeys[]): ModdedKeyCode {
   };
 }
 export const left_ctrl = (k: KeyCode): ModdedKeyCode => modKey(k, ["left_control"]);
+export const left_command = (k: KeyCode): ModdedKeyCode => modKey(k, ["left_command"]);
 export const left_opt = (k: KeyCode): ModdedKeyCode => modKey(k, ["left_option"]);
 export const left_shift = (k: KeyCode): ModdedKeyCode => modKey(k, ["left_shift"]);
 export const right_command = (k: KeyCode): ModdedKeyCode => modKey(k, ["right_command"]);
