@@ -29,3 +29,14 @@ export const combo = (from: KeyCode[]): Combo => ({
 export function shell(command: string): Shell {
   return { shell_command: command };
 }
+
+export function vsCodeProject(path: string): Shell {
+  return {
+    shell_command: `/opt/homebrew/bin/code ${path}`,
+  };
+}
+export function pycharmProject(path: string): Shell {
+  return {
+    shell_command: `~/.idea/pycharm ${path}`,
+  };
+}
