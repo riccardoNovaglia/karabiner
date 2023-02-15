@@ -1,7 +1,6 @@
 import {
   AppRule,
   combo,
-  email,
   from,
   left_ctrl,
   left_opt,
@@ -9,6 +8,7 @@ import {
   modKey,
   Rule,
   shell,
+  stringToChars,
   SublayerRule,
 } from ".";
 
@@ -191,6 +191,7 @@ test("sublayer commands", () => {
             },
           },
         ],
+        to_if_alone: [{ key_code: "a" }],
         to: [
           {
             set_variable: {
@@ -242,6 +243,14 @@ test("sublayer commands - complex activation", () => {
             },
           },
         ],
+        to_if_alone: [
+          {
+            key_code: "a",
+            modifiers: {
+              mandatory: ["left_shift"],
+            },
+          },
+        ],
         to: [
           {
             set_variable: {
@@ -274,7 +283,7 @@ test("sublayer commands - complex activation", () => {
 });
 
 test("email util fn", () => {
-  expect(email("me@me.co")).toEqual([
+  expect(stringToChars("me@me.co")).toEqual([
     "m",
     "e",
     { from: "2", modifiers: { mandatory: ["left_shift"] } },
@@ -286,7 +295,7 @@ test("email util fn", () => {
   ]);
 });
 test("rule with email", () => {
-  expect(Rule("email", [from("a").to(email("a@b.c"))])).toEqual({
+  expect(Rule("email", [from("a").to(stringToChars("a@b.c"))])).toEqual({
     description: "email",
     manipulators: [
       {

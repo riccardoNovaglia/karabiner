@@ -62,11 +62,7 @@ export function SublayerRule(
         },
       },
     ],
-    to_if_alone: [
-      {
-        key_code: activationKeys,
-      },
-    ],
+    to_if_alone: [fff(activationKeys)],
     to: [
       {
         set_variable: {

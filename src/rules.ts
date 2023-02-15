@@ -11,10 +11,11 @@ import {
   right_command,
   Rule,
   shell,
+  waitForIt,
 } from "./dsl/index";
-import { privateRules } from "./private";
 import { KarabinerRules } from "./k/types";
 import { app as app_, createHyperSubLayers } from "./k/utils";
+import { privateRules } from "./private";
 
 const rules: KarabinerRules[] = [
   // Define the Hyper key itself
@@ -85,7 +86,7 @@ const inAppRules = [
     from("f2").to(modKey("v", ["left_control", "left_shift"])), // toggle video
     ...easyVolume,
   ]),
-  AppRule("Meet", "safari", [
+  AppRule("Meet", "com.apple.Safari", [
     from("f1").to(modKey("d", ["left_control", "left_shift"])), // toggle audio
     from("f2").to(modKey("e", ["left_control", "left_shift"])), // toggle video
     from("grave_accent_and_tilde").to(modKey("m", ["left_control", "left_shift"])), // toggle self view
@@ -123,7 +124,16 @@ const noiceHyperNavigate = Rule("Noice/Hyper navigate", [
 ]);
 const panda = Rule(
   "Panda",
-  from(noice("p")).to([left_shift("semicolon"), "p", "a", "n", "d", "a", "return_or_enter"])
+  from(noice("p")).to([
+    left_shift("semicolon"),
+    "p",
+    "a",
+    "n",
+    "d",
+    "a",
+    ...waitForIt,
+    "return_or_enter",
+  ])
 );
 export const myRules: KarabinerRules[] = [
   Rule("caps lock to escape", from("caps_lock").to("escape")),
