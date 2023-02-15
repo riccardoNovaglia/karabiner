@@ -127,7 +127,10 @@ const panda = Rule(
 );
 export const myRules: KarabinerRules[] = [
   Rule("caps lock to escape", from("caps_lock").to("escape")),
-  Rule("fn to right-control switch", from("caps_lock").to("escape")), // TODO: device filter?
+  Rule("fn to right-control switch", [
+    from("fn").to("right_control"),
+    from("right_control").to("fn"),
+  ]),
   Rule("Easy delete", from(left_ctrl("delete_or_backspace")).to("delete_forward")),
   Rule("Easy percent", from(left_opt("p")).to(left_shift("5"))),
   Rule("Pause on f8 by default", from("f8").to("play_or_pause")),
