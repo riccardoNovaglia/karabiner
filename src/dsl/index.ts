@@ -1,5 +1,6 @@
 import {
   Conditions,
+  DeviceCondition,
   From,
   FrontMostApplicationCondition,
   KarabinerRules,
@@ -21,6 +22,7 @@ import {
   ChainedOptionalDescription,
   ChainedTo,
   Combo,
+  DeviceDefinition,
   ManipulatorsInput,
   SingleToInput,
   ToInput,
@@ -45,7 +47,6 @@ export function AppRule(
   };
   return FilteredRule(description, manipulators, condition);
 }
-
 export function SublayerRule(
   description: string,
   activationKeys: KeyCode | ModdedKeyCode,
@@ -78,6 +79,22 @@ export function SublayerRule(
     value: 1,
   };
   return FilteredRule(description, manipulators, condition, [activationRule]);
+}
+export function DeviceRule(
+  description: string,
+  deviceDefinition: DeviceDefinition,
+  manipulators: ManipulatorsInput
+): KarabinerRules {
+  const condition: DeviceCondition = {
+    type: "device_if",
+    identifiers: [
+      {
+        product_id: deviceDefinition.productId,
+        vendor_id: deviceDefinition.vendorId,
+      },
+    ],
+  };
+  return FilteredRule(description, manipulators, condition);
 }
 
 function FilteredRule(

@@ -1,6 +1,7 @@
 import {
   AppRule,
   combo,
+  DeviceRule,
   from,
   left_ctrl,
   left_opt,
@@ -277,6 +278,30 @@ test("sublayer commands - complex activation", () => {
             value: 1,
           },
         ],
+      },
+    ],
+  });
+});
+
+test("device specific rules", () => {
+  expect(DeviceRule("device rule", { productId: 123, vendorId: 321 }, from("a").to("b"))).toEqual({
+    description: "device rule",
+    manipulators: [
+      {
+        conditions: [
+          {
+            identifiers: [
+              {
+                product_id: 123,
+                vendor_id: 321,
+              },
+            ],
+            type: "device_if",
+          },
+        ],
+        from: { key_code: "a" },
+        to: [{ key_code: "b" }],
+        type: "basic",
       },
     ],
   });

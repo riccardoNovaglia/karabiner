@@ -16,6 +16,11 @@ export type ManipulatorsInput =
   | ChainedOptionalDescription
   | ChainedOptionalDescription[];
 
+export type DeviceDefinition = {
+  productId: number;
+  vendorId: number;
+};
+
 export type Shell = {
   shell_command: string;
 };
