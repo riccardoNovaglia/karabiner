@@ -14,63 +14,7 @@ import {
   waitForIt,
 } from "./dsl/index";
 import { KarabinerRules } from "./k/types";
-import { app as app_, createHyperSubLayers } from "./k/utils";
 import { privateRules } from "./private";
-
-const rules: KarabinerRules[] = [
-  // Define the Hyper key itself
-  {
-    description: "Hyper Key (⌃⌥⇧⌘)s",
-    manipulators: [
-      {
-        description: "Caps lock -> Escape -> Hyper Key",
-        from: {
-          key_code: "caps_lock",
-        },
-        to: [
-          {
-            key_code: "left_shift",
-            modifiers: ["left_command", "left_control", "left_option"],
-          },
-        ],
-        to_if_alone: [
-          {
-            key_code: "escape",
-          },
-        ],
-        type: "basic",
-      },
-      {
-        type: "basic",
-        description: "Slash held -> Hyper Key",
-        from: {
-          key_code: "slash",
-        },
-        to: [
-          {
-            key_code: "left_shift",
-            modifiers: ["left_command", "left_control", "left_option"],
-          },
-        ],
-        to_if_alone: [
-          {
-            key_code: "slash",
-          },
-        ],
-      },
-    ],
-  },
-  ...createHyperSubLayers({
-    // o = "Open" applications
-    o: {
-      g: app_("Google Chrome"),
-      v: app_("Visual Studio Code"),
-      s: app_("Slack"),
-      n: app_("Notion"),
-      y: app_("Spotify"),
-    },
-  }),
-];
 
 function app(appName: string) {
   return shell(`open -a ${appName}.app`);
@@ -95,7 +39,7 @@ const inAppRules = [
   ]),
   AppRule("Spotify", "com.spotify.client", [
     from("f7").to("rewind"),
-    from("f8").to("spacebar"),
+    from("play_or_pause").to("spacebar"),
     from("f9").to("fastforward"),
     from(left_command("f")).to(left_command("l")),
     ...easyVolume,
@@ -136,15 +80,15 @@ const panda = Rule(
   ])
 );
 export const myRules: KarabinerRules[] = [
-  Rule("caps lock to escape", from("caps_lock").to("escape")),
-  Rule("fn to right-control switch", [
+  Rule("Caps lock to escape", from("caps_lock").to("escape")),
+  Rule("Fn to right-control switch", [
     from("fn").to("right_control"),
     from("right_control").to("fn"),
   ]),
+  // TODO: device filter
   Rule("Easy delete", from(left_ctrl("delete_or_backspace")).to("delete_forward")),
   Rule("Easy percent", from(left_opt("p")).to(left_shift("5"))),
-  Rule("Pause on f8 by default", from("f8").to("play_or_pause")),
-  Rule("Shift f8 to f8", from(left_shift("f8")).to("f8")),
+  Rule("Pause on f8 by default", [from("f8").to("play_or_pause"), from(left_shift("f8")).to("f8")]),
   panda,
   openApps,
   noiceHyperNavigate,

@@ -23,6 +23,7 @@
     "watch": "nodemon --exec yarn build -e ts",
     "test": "jest --watch",
     "pretty": "prettier -w src",
-    "deploy:test": "tsm src/deploy/testRule/go.ts"
+    "deploy:test": "tsm src/deploy/testRule/go.ts",
+    "deploy:default": "tsm src/deploy/profile/go.ts"
   }
 }
