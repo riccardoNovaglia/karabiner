@@ -31,10 +31,10 @@ const inAppRules = [
     ...easyVolume,
   ]),
   AppRule("Meet", "com.apple.Safari", [
-    from("f1").to(modKey("d", ["left_control", "left_shift"])), // toggle audio
-    from("f2").to(modKey("e", ["left_control", "left_shift"])), // toggle video
-    from("grave_accent_and_tilde").to(modKey("m", ["left_control", "left_shift"])), // toggle self view
-    from("f5").to(modKey("c", ["left_control", "left_shift"])), // toggle chat panel
+    from("f1").to(left_command("d")), // toggle audio
+    from("f2").to(left_command("e")), // toggle video
+    from("grave_accent_and_tilde").to(modKey("m", ["left_control", "left_command"])), // toggle self view
+    from("f5").to(modKey("c", ["left_control", "left_command"])), // toggle chat panel
     ...easyVolume,
   ]),
   AppRule("Spotify", "com.spotify.client", [
@@ -66,8 +66,7 @@ const noiceHyperNavigate = Rule("Noice/Hyper navigate", [
   from(hyper("l")).to(left_shift("right_arrow")),
   from(hyper("i")).to(left_shift("up_arrow")),
 ]);
-const panda = Rule(
-  "Panda",
+const emojis = Rule("Emojis", [
   from(noice("p")).to([
     left_shift("semicolon"),
     "p",
@@ -77,8 +76,14 @@ const panda = Rule(
     "a",
     ...waitForIt,
     "return_or_enter",
-  ])
-);
+  ]),
+  from(right_command("e")).to(hyper("e")),
+]);
+const softwarey = Rule("Softwarey stuff", [
+  from(left_opt("open_bracket")).to(left_shift("open_bracket")),
+  from(left_opt("hyphen")).to(["hyphen", left_shift("period")]),
+  from(left_opt("equal_sign")).to(["equal_sign", left_shift("period")]),
+]);
 export const myRules: KarabinerRules[] = [
   Rule("Caps lock to escape", from("caps_lock").to("escape")),
   Rule("Fn to right-control switch", [
@@ -89,9 +94,10 @@ export const myRules: KarabinerRules[] = [
   Rule("Easy delete", from(left_ctrl("delete_or_backspace")).to("delete_forward")),
   Rule("Easy percent", from(left_opt("p")).to(left_shift("5"))),
   Rule("Pause on f8 by default", [from("f8").to("play_or_pause"), from(left_shift("f8")).to("f8")]),
-  panda,
+  emojis,
   openApps,
   noiceHyperNavigate,
+  softwarey,
   ...inAppRules,
   ...privateRules,
 ];
