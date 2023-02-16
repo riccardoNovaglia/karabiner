@@ -9,6 +9,7 @@ import {
   modKey,
   Rule,
   shell,
+  stc,
   stringToChars,
   SublayerRule,
 } from ".";
@@ -349,6 +350,9 @@ test("rule with email", () => {
       },
     ],
   });
+});
+test("string to chars", () => {
+  expect(stc("=>")).toEqual(["equal_sign", left_shift("period")]);
 });
 
 test("simultaneous", () => {

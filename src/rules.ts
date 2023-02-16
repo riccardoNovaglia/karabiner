@@ -12,6 +12,7 @@ import {
   right_command,
   Rule,
   shell,
+  stc,
   waitForIt,
 } from "./dsl/index";
 import { KarabinerRules } from "./k/types";
@@ -83,19 +84,10 @@ const emojis = Rule("Emojis", [
   from(right_command("e")).to(hyper("e")),
 ]);
 const softwarey = Rule("Softwarey stuff", [
-  from(left_opt("open_bracket")).to(left_shift("open_bracket")),
-  from(left_opt("hyphen")).to(["hyphen", left_shift("period")]),
-  from(left_opt("equal_sign")).to(["equal_sign", left_shift("period")]),
-  from(left_opt("a")).to([
-    left_shift("9"),
-    left_shift("0"),
-    "spacebar",
-    "equal_sign",
-    left_shift("period"),
-    "spacebar",
-    left_shift("open_bracket"),
-    left_shift("close_bracket"),
-  ]),
+  from(left_opt("open_bracket")).to(stc("{")),
+  from(left_opt("hyphen")).to(stc("->")),
+  from(left_opt("equal_sign")).to(stc("=>")),
+  from(left_opt("a")).to(stc("() => {}")),
 ]);
 export const myRules: KarabinerRules[] = [
   Rule("Caps lock to escape", from("caps_lock").to("escape")),
@@ -104,7 +96,7 @@ export const myRules: KarabinerRules[] = [
     from("right_control").to("fn"),
   ]),
   DeviceRule("Easy delete", k8, from(left_ctrl("delete_or_backspace")).to("delete_forward")),
-  Rule("Easy percent", from(left_opt("p")).to(left_shift("5"))),
+  Rule("Easy percent", from(left_opt("p")).to(stc("%"))),
   Rule("Pause on f8 by default", [from("f8").to("play_or_pause"), from(left_shift("f8")).to("f8")]),
   emojis,
   openApps,
