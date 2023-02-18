@@ -1,4 +1,5 @@
 import {
+  app,
   AppRule,
   DeviceRule,
   from,
@@ -9,20 +10,16 @@ import {
   left_shift,
   modKey,
   noice,
+  pasteEmoji,
   right_command,
   Rule,
-  shell,
   stc,
-  waitForIt,
 } from "./dsl/index";
 import { KarabinerRules } from "./k/types";
 import { privateRules } from "./private";
 
 const k8 = { productId: 591, vendorId: 1452 };
 
-function app(appName: string) {
-  return shell(`open -a ${appName}.app`);
-}
 const easyVolume = [
   from("f10").to("mute"),
   from("f11").to("volume_decrement"),
@@ -70,24 +67,25 @@ const noiceHyperNavigate = Rule("Noice/Hyper navigate", [
   from(hyper("l")).to(left_shift("right_arrow")),
   from(hyper("i")).to(left_shift("up_arrow")),
 ]);
+
 const emojis = Rule("Emojis", [
-  from(noice("p")).to([
-    left_shift("semicolon"),
-    "p",
-    "a",
-    "n",
-    "d",
-    "a",
-    ...waitForIt,
-    "return_or_enter",
-  ]),
   from(right_command("e")).to(hyper("e")),
+  from(noice("p")).to(pasteEmoji("🐼")),
 ]);
 const softwarey = Rule("Softwarey stuff", [
   from(left_opt("open_bracket")).to(stc("{")),
   from(left_opt("hyphen")).to(stc("->")),
   from(left_opt("equal_sign")).to(stc("=>")),
   from(left_opt("a")).to(stc("() => {}")),
+]);
+const suggestion = Rule("Suggestion", [
+  from(noice("s")).to(
+    stc(
+      `\`\`\`suggestion
+
+\`\`\``
+    )
+  ),
 ]);
 export const myRules: KarabinerRules[] = [
   Rule("Caps lock to escape", from("caps_lock").to("escape")),
@@ -102,6 +100,7 @@ export const myRules: KarabinerRules[] = [
   openApps,
   noiceHyperNavigate,
   softwarey,
+  suggestion,
   ...inAppRules,
   ...privateRules,
 ];

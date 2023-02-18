@@ -1,3 +1,4 @@
+import util from "util";
 import {
   AppRule,
   combo,
@@ -7,6 +8,7 @@ import {
   left_opt,
   left_shift,
   modKey,
+  noice,
   Rule,
   shell,
   stc,
@@ -308,6 +310,38 @@ test("device specific rules", () => {
   });
 });
 
+test("simultaneous", () => {
+  expect(Rule("combo", from(combo(["a", "b"])).to("c"))).toEqual({
+    description: "combo",
+    manipulators: [
+      {
+        from: {
+          simultaneous: [
+            {
+              key_code: "a",
+            },
+            {
+              key_code: "b",
+            },
+          ],
+          simultaneous_options: {
+            detect_key_down_uninterruptedly: true,
+            key_down_order: "strict",
+            key_up_order: "strict_inverse",
+            key_up_when: "any",
+          },
+        },
+        to: [
+          {
+            key_code: "c",
+          },
+        ],
+        type: "basic",
+      },
+    ],
+  });
+});
+
 test("email util fn", () => {
   expect(stringToChars("me@me.co")).toEqual([
     "m",
@@ -354,35 +388,26 @@ test("rule with email", () => {
 test("string to chars", () => {
   expect(stc("=>")).toEqual(["equal_sign", left_shift("period")]);
 });
+xtest("string to char log", () => {
+  const rule = Rule("Suggestion", [
+    from(noice("s")).to(
+      stc(
+        `\`\`\`suggestion
 
-test("simultaneous", () => {
-  expect(Rule("combo", from(combo(["a", "b"])).to("c"))).toEqual({
-    description: "combo",
-    manipulators: [
-      {
-        from: {
-          simultaneous: [
-            {
-              key_code: "a",
-            },
-            {
-              key_code: "b",
-            },
-          ],
-          simultaneous_options: {
-            detect_key_down_uninterruptedly: true,
-            key_down_order: "strict",
-            key_up_order: "strict_inverse",
-            key_up_when: "any",
-          },
-        },
-        to: [
-          {
-            key_code: "c",
-          },
-        ],
-        type: "basic",
-      },
-    ],
-  });
+\`\`\``
+      )
+    ),
+  ]);
+  console.log(util.inspect(rule, false, null, true /* enable colors */));
+});
+test("string to char - uppercases", () => {
+  expect(stc("ABC 123")).toEqual([
+    left_shift("a"),
+    left_shift("b"),
+    left_shift("c"),
+    "spacebar",
+    "1",
+    "2",
+    "3",
+  ]);
 });

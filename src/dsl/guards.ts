@@ -11,6 +11,12 @@ import {
 export function isKeyCode(from: unknown): from is KeyCode {
   return typeof from === "string" && !!keyCodes.find((code) => code === from);
 }
+export function isUppercaseKeyCode(from: string): boolean {
+  return from.toUpperCase() === from && isKeyCode(from.toLowerCase());
+}
+export function isNumber(from: string): boolean {
+  return !isNaN(Number.parseInt(from));
+}
 export function isSingleInput(to: SingleToInput | SingleToInput[]): to is SingleToInput {
   return !Array.isArray(to);
 }
