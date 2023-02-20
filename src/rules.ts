@@ -28,8 +28,8 @@ const easyVolume = [
 ];
 const inAppRules = [
   AppRule("Zoom", "us.zoom.xos", [
-    from("f1").to(modKey("a", ["left_control", "left_shift"])), // toggle audio
-    from("f2").to(modKey("v", ["left_control", "left_shift"])), // toggle video
+    from("f1").to(modKey("a", ["left_command", "left_shift"])), // toggle audio
+    from("f2").to(modKey("v", ["left_command", "left_shift"])), // toggle video
     ...easyVolume,
   ]),
   AppRule("Meet", "com.apple.Safari", [
@@ -41,7 +41,6 @@ const inAppRules = [
   ]),
   AppRule("Spotify", "com.spotify.client", [
     from("f7").to("rewind"),
-    from("play_or_pause").to("spacebar"),
     from("f9").to("fastforward"),
     from(left_command("f")).to(left_command("l")),
     ...easyVolume,
@@ -78,7 +77,7 @@ const softwarey = Rule("Softwarey stuff", [
   from(left_opt("close_bracket")).to(stc("%}")),
   from(left_opt("hyphen")).to(stc("->")),
   from(left_opt("equal_sign")).to(stc("=>")),
-  from(left_opt("a")).to(stc("() => {}")),
+  from(left_opt("a")).to([...stc("() => {}"), "left_arrow"]),
   from(right_opt("r")).to(stc("return")),
 ]);
 const suggestion = Rule("Suggestion", [

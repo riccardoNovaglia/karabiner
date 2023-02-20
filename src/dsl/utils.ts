@@ -23,7 +23,7 @@ const stringToCharsMaps: StringToChar = {
   "\n": "return_or_enter",
 };
 
-export function stringToChars(string: string): ToInput {
+export function stringToChars(string: string): SingleToInput[] {
   const chars: string[] = string.split("");
   return chars.map((char) => {
     if (isNumber(char)) return char as KeyCode;
