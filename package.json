@@ -24,6 +24,7 @@
     "test": "jest --watch",
     "pretty": "prettier -w src",
     "deploy:test": "tsm src/deploy/testRule/go.ts",
-    "deploy:default": "tsm src/deploy/profile/go.ts"
+    "deploy:default": "tsm src/deploy/profile/go.ts",
+    "deploy:backup": "./src/deploy/backup.sh"
   }
 }
