@@ -12,6 +12,7 @@ import {
   noice,
   pasteEmoji,
   right_command,
+  right_opt,
   Rule,
   stc,
 } from "./dsl/index";
@@ -73,10 +74,12 @@ const emojis = Rule("Emojis", [
   from(noice("p")).to(pasteEmoji("🐼")),
 ]);
 const softwarey = Rule("Softwarey stuff", [
-  from(left_opt("open_bracket")).to(stc("{")),
+  from(left_opt("open_bracket")).to(stc("{%")),
+  from(left_opt("close_bracket")).to(stc("%}")),
   from(left_opt("hyphen")).to(stc("->")),
   from(left_opt("equal_sign")).to(stc("=>")),
   from(left_opt("a")).to(stc("() => {}")),
+  from(right_opt("r")).to(stc("return")),
 ]);
 const suggestion = Rule("Suggestion", [
   from(noice("s")).to(
