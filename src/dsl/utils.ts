@@ -34,13 +34,15 @@ export function stringToChars(string: string): SingleToInput[] {
 }
 export const stc = stringToChars;
 
-const waitForIt: KeyCode[] = Array(10).fill("fn");
-
 export const app = (appName: string) => shell(`open -a ${appName}.app`);
+export const appBundle = (appBundleName: string) => shell(`open -b ${appBundleName}`);
+export const multiApp = (appNames: string[]) =>
+  shell(appNames.map((appName) => `open -a ${appName}.app`).join(";"));
 
 export const emoji = (emoji: string): Shell =>
   shell(`export LC_ALL=en_US.UTF-8; echo '${emoji}\\c' | pbcopy`);
 
+const waitForIt: KeyCode[] = Array(30).fill("fn");
 export const pasteEmoji = (emojiStr: string): ToInput => [
   emoji(emojiStr),
   ...waitForIt,

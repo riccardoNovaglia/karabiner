@@ -1,5 +1,6 @@
 import {
   app,
+  appBundle,
   AppRule,
   DeviceRule,
   from,
@@ -9,6 +10,7 @@ import {
   left_opt,
   left_shift,
   modKey,
+  multiApp,
   noice,
   pasteEmoji,
   right_command,
@@ -45,16 +47,20 @@ const inAppRules = [
     from(left_command("f")).to(left_command("l")),
     ...easyVolume,
   ]),
+  AppRule("Slack", "com.tinyspeck.slackmacgap", [
+    from(left_opt("w")).to(modKey("h", ["left_command", "left_shift"])),
+  ]),
 ];
 const openApps = Rule("Apps", [
   from(right_command("a")).to(app("Asana")),
   from(right_command("s")).to(app("Slack")),
-  from(right_command("l")).to(app("Calendar")), // TODO: review- opens the calendar app
+  from(right_command("l")).to(appBundle("com.google.Chrome.app.kjbdgfilnfhdoflbpgamdcdgpehopbep")),
   from(right_command("g")).to(app("Gmail")),
   from(right_command("c")).to(app("Chrome")),
   from(right_command("n")).to(app("Notion")),
   from(right_command("i")).to(app("iTerm")),
   from(right_command("y")).to(app("Spotify")),
+  from(right_command("x")).to(multiApp(["Chrome", "Slack", "Gmail"])),
 ]);
 const noiceHyperNavigate = Rule("Noice/Hyper navigate", [
   from(noice("j")).to("left_arrow"),
