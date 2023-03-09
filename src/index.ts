@@ -1,5 +1,5 @@
 import fs from "fs";
-import { myRules } from "./rules";
+import { myRules } from "./private/rules";
 
 fs.writeFileSync(
   "karabiner.scratch.json",

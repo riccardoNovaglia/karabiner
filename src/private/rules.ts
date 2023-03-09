@@ -17,8 +17,8 @@ import {
   right_opt,
   Rule,
   stc,
-} from "./dsl/index";
-import { KarabinerRules } from "./k/types";
+} from "../dsl/index";
+import { KarabinerRules } from "../k/types";
 import { privateRules } from "./private";
 
 const k8 = { productId: 591, vendorId: 1452 };

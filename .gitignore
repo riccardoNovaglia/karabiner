@@ -1,3 +1,4 @@
 node_modules
 karabiner.scratch.json
-src/private.ts
+**/private.ts
+build

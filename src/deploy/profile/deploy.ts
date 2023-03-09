@@ -1,5 +1,5 @@
 import { KarabinerRules } from "../../k/types";
-import { myRules } from "../../rules";
+import { myRules } from "../../private/rules";
 
 export type KarabinerConfig = {
   global: unknown;

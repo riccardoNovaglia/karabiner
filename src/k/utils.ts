@@ -74,6 +74,7 @@ export function createHyperSubLayer(
           key_code: command_key,
           modifiers: {
             // Mandatory modifiers are *not* added to the "to" event
+            // @ts-ignore
             mandatory: ["any"],
           },
         },
