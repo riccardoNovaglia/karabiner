@@ -1,9 +1,12 @@
 {
-  "name": "karabiner",
+  "name": "karabiner-ts",
   "version": "1.0.0",
-  "main": "index.js",
-  "author": "Max Stoiber <contact@mxstbr.com>",
   "license": "MIT",
+  "types": "build/dsl/index.d.ts",
+  "main": "build/dsl/index.js",
+  "files": [
+    "build"
+  ],
   "devDependencies": {
     "@swc/core": "^1.3.35",
     "@swc/jest": "^0.2.24",
@@ -19,9 +22,10 @@
     "typescript": "^4.9.5"
   },
   "scripts": {
-    "build": "tsm src/index.ts",
+    "build": "rm -rf build; tsc --outDir build",
     "watch": "nodemon --exec yarn build -e ts",
     "test": "jest --watch",
+    "test:pack": "mkdir -p .tmp; yarn build; yarn pack; mv ./karabiner-ts-v*.tgz ./.tmp/",
     "pretty": "prettier -w src",
     "deploy:test": "tsm src/deploy/testRule/go.ts",
     "deploy:default": "tsm src/deploy/profile/go.ts",

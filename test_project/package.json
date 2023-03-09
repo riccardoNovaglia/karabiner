@@ -1,0 +1,17 @@
+{
+  "name": "test_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "tsm index.ts",
+    "install:packed": "npm install ../.tmp/karabiner-ts*"
+  },
+  "dependencies": {
+    "karabiner-ts": "file:../.tmp/karabiner-ts-v1.0.0.tgz",
+    "tsm": "^2.2.2",
+    "typescript": "^4.9.5"
+  },
+  "author": "",
+  "license": "ISC"
+}

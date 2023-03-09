@@ -2,3 +2,5 @@ node_modules
 karabiner.scratch.json
 **/private.ts
 build
+.tmp
+yarn-error.log
