@@ -11,6 +11,8 @@ const stringToCharsMaps: StringToChar = {
   "=": "equal_sign",
   "+": left_shift("equal_sign"),
   "-": "hyphen",
+  // prettier-ignore
+  "_": left_shift("hyphen"),
   ".": "period",
   ">": left_shift("period"),
   "%": left_shift("5"),

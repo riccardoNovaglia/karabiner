@@ -85,6 +85,7 @@ const softwarey = Rule("Softwarey stuff", [
   from(left_opt("equal_sign")).to(stc("=>")),
   from(left_opt("a")).to([...stc("() => {}"), "left_arrow"]),
   from(right_opt("r")).to(stc("return")),
+  from(modKey("i", ["left_control", "left_command"])).to(stc("__init__.py")),
 ]);
 const suggestion = Rule("Suggestion", [
   from(noice("s")).to(
@@ -104,6 +105,7 @@ export const myRules: KarabinerRules[] = [
   DeviceRule("Easy delete", k8, from(left_ctrl("delete_or_backspace")).to("delete_forward")),
   Rule("Easy percent", from(left_opt("p")).to(stc("%"))),
   Rule("Pause on f8 by default", [from("f8").to("play_or_pause"), from(left_shift("f8")).to("f8")]),
+  Rule("Right Shift to Noice", [from('right_shift').to(modKey('left_control', ['left_option', 'left_command']))]),
   emojis,
   openApps,
   noiceHyperNavigate,
