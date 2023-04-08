@@ -4,3 +4,4 @@ karabiner.scratch.json
 build
 .tmp
 yarn-error.log
+.envrc

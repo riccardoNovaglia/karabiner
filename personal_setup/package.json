@@ -1,11 +1,11 @@
 {
-  "name": "test_project",
+  "name": "personal_setup",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "deploy.ts",
   "scripts": {
-    "test": "tsm index.ts",
-    "install:packed": "npm install ../.tmp/karabiner-ts*"
+    "install:packed": "npm install ../.tmp/karabiner-ts*",
+    "deploy": "tsm deploy.ts"
   },
   "dependencies": {
     "karabiner-ts": "file:../.tmp/karabiner-ts-v1.0.0.tgz",

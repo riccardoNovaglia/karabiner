@@ -17,8 +17,8 @@ import {
   right_opt,
   Rule,
   stc,
-} from "../dsl/index";
-import { KarabinerRules } from "../k/types";
+} from "karabiner-ts";
+import { KarabinerRules } from "karabiner-ts/build/k/types";
 import { privateRules } from "./private";
 
 const k8 = { productId: 591, vendorId: 1452 };
@@ -96,7 +96,7 @@ const suggestion = Rule("Suggestion", [
     )
   ),
 ]);
-export const myRules: KarabinerRules[] = [
+export const rules: KarabinerRules[] = [
   Rule("Caps lock to escape", from("caps_lock").to("escape")),
   DeviceRule("Fn to right-control switch", k8, [
     from("fn").to("right_control"),
@@ -105,7 +105,9 @@ export const myRules: KarabinerRules[] = [
   DeviceRule("Easy delete", k8, from(left_ctrl("delete_or_backspace")).to("delete_forward")),
   Rule("Easy percent", from(left_opt("p")).to(stc("%"))),
   Rule("Pause on f8 by default", [from("f8").to("play_or_pause"), from(left_shift("f8")).to("f8")]),
-  Rule("Right Shift to Noice", [from('right_shift').to(modKey('left_control', ['left_option', 'left_command']))]),
+  Rule("Right Shift to Noice", [
+    from("right_shift").to(modKey("left_control", ["left_option", "left_command"])),
+  ]),
   emojis,
   openApps,
   noiceHyperNavigate,
