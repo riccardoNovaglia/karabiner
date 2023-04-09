@@ -24,12 +24,8 @@
   "scripts": {
     "build": "rm -rf build; tsc --outDir build",
     "postbuild": "rg --files-with-matches 'gmail' build  && echo 'Email address found in files above!' && exit 1 || exit 0",
-    "watch": "nodemon --exec yarn build -e ts",
     "test": "jest --watch",
     "test:pack": "mkdir -p .tmp; yarn build; yarn pack; mv ./karabiner-ts-v*.tgz ./.tmp/; pushd personal_setup; yarn run install:packed; popd",
-    "pretty": "prettier -w src",
-    "deploy:test": "tsm src/deploy/testRule/go.ts",
-    "deploy:default": "tsm src/deploy/profile/go.ts",
-    "deploy:backup": "./src/deploy/backup.sh"
+    "pretty": "prettier -w src"
   }
 }

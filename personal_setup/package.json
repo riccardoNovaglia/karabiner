@@ -5,7 +5,8 @@
   "main": "deploy.ts",
   "scripts": {
     "install:packed": "npm install ../.tmp/karabiner-ts*",
-    "deploy": "tsm deploy.ts"
+    "deploy": "tsm deploy.ts",
+    "backup": "tsm backup.ts"
   },
   "dependencies": {
     "karabiner-ts": "file:../.tmp/karabiner-ts-v1.0.0.tgz",
