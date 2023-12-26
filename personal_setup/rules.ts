@@ -13,6 +13,7 @@ import {
   multiApp,
   noice,
   pasteEmoji,
+  pycharmProject,
   right_command,
   right_opt,
   Rule,
@@ -22,6 +23,7 @@ import { KarabinerRules } from "karabiner-ts/build/k/types";
 import { privateRules } from "./private";
 
 const k8 = { productId: 591, vendorId: 1452 };
+const q11 = { productId: 480, vendorId: 13364 };
 
 const easyVolume = [
   from("f10").to("mute"),
@@ -39,28 +41,68 @@ const inAppRules = [
     from("f2").to(left_command("e")), // toggle video
     from("grave_accent_and_tilde").to(modKey("m", ["left_control", "left_command"])), // toggle self view
     from("f5").to(modKey("c", ["left_control", "left_command"])), // toggle chat panel
+    // Q11
+    from("f21").to(left_command("d")), // toggle audio
+    from("f22").to(left_command("e")), // toggle video
+    from("f23").to(modKey("m", ["left_control", "left_command"])), // toggle self view
+    from("f24").to(modKey("c", ["left_control", "left_command"])), // toggle chat panel
+    ...easyVolume,
+  ]),
+  AppRule("Meet", "com.google.Chrome.app.kjgfgldnnfoeklkmfkjfagphfepbbdan", [
+    from("f1").to(left_command("d")), // toggle audio
+    from("f2").to(left_command("e")), // toggle video
+    from("grave_accent_and_tilde").to(modKey("m", ["left_control", "left_command"])), // toggle self view
+    from("f5").to(modKey("c", ["left_control", "left_command"])), // toggle chat panel
+    // Q11
+    from("f21").to(left_command("d")), // toggle audio
+    from("f22").to(left_command("e")), // toggle video
+    from("f23").to(modKey("m", ["left_control", "left_command"])), // toggle self view
+    from("f24").to(modKey("c", ["left_control", "left_command"])), // toggle chat panel
+    ...easyVolume,
+  ]),
+  AppRule("Zoom - Q11", "us.zoom.xos", [
+    from("f21").to(modKey("a", ["left_command", "left_shift"])), // toggle audio
+    from("f22").to(modKey("v", ["left_command", "left_shift"])), // toggle video
     ...easyVolume,
   ]),
   AppRule("Spotify", "com.spotify.client", [
     from("f7").to("rewind"),
     from("f9").to("fastforward"),
     from(left_command("f")).to(left_command("l")),
+    from(left_command("left_arrow")).to(modKey("left_arrow", ["left_command", "left_option"])),
+    from(left_command("right_arrow")).to(modKey("right_arrow", ["left_command", "left_option"])),
     ...easyVolume,
   ]),
   AppRule("Slack", "com.tinyspeck.slackmacgap", [
     from(left_opt("w")).to(modKey("h", ["left_command", "left_shift"])),
+    from(left_command("l")).to(modKey("s", ["left_command", "left_shift"])),
+    from(modKey("left_arrow", ["left_command", "left_option"])).to(left_command("open_bracket")),
+    from(modKey("right_arrow", ["left_command", "left_option"])).to(left_command("close_bracket")),
+    from(left_command("1")).to(left_ctrl("1")),
+    from(left_command("2")).to(left_ctrl("2")),
+    from(left_command("3")).to(left_ctrl("3")),
+    from(left_command("4")).to(left_ctrl("4")),
+  ]),
+  AppRule("Arc", "company.thebrowser.Browser", [
+    from(left_opt("tab")).to(left_ctrl("tab")),
+    from(modKey("tab", ["left_shift", "left_option"])).to(
+      modKey("tab", ["left_shift", "left_control"])
+    ),
+    from(left_command("k")).to(left_command("t")),
   ]),
 ];
 const openApps = Rule("Apps", [
-  from(right_command("a")).to(app("Asana")),
-  from(right_command("s")).to(app("Slack")),
-  from(right_command("l")).to(appBundle("com.google.Chrome.app.kjbdgfilnfhdoflbpgamdcdgpehopbep")),
+  from(right_command("b")).to(app("Arc")),
+  from(right_command("c")).to(appBundle("com.google.Chrome")),
   from(right_command("g")).to(app("Gmail")),
-  from(right_command("c")).to(app("Chrome")),
-  from(right_command("n")).to(app("Notion")),
   from(right_command("i")).to(app("iTerm")),
+  from(right_command("k")).to(pycharmProject("~/projects/kraken-core")),
+  from(right_command("l")).to(appBundle("com.google.Chrome.app.kjbdgfilnfhdoflbpgamdcdgpehopbep")),
+  from(right_command("n")).to(app("Notion")),
+  from(right_command("s")).to(app("Slack")),
+  from(right_command("v")).to(app("Vivaldi")),
   from(right_command("y")).to(app("Spotify")),
-  from(right_command("x")).to(multiApp(["Chrome", "Slack", "Gmail"])),
+  from(right_command("x")).to(appBundle("com.jetbrains.pycharm")),
 ]);
 const noiceHyperNavigate = Rule("Noice/Hyper navigate", [
   from(noice("j")).to("left_arrow"),
@@ -104,9 +146,12 @@ export const rules: KarabinerRules[] = [
   ]),
   DeviceRule("Easy delete", k8, from(left_ctrl("delete_or_backspace")).to("delete_forward")),
   Rule("Easy percent", from(left_opt("p")).to(stc("%"))),
+  Rule("Easy ampersand", from(left_opt("e")).to(stc("&"))),
   Rule("Pause on f8 by default", [from("f8").to("play_or_pause"), from(left_shift("f8")).to("f8")]),
-  Rule("Right Shift to Noice", [
-    from("right_shift").to(modKey("left_control", ["left_option", "left_command"])),
+  Rule("Right Opt to Noice", [
+    from("right_alt").to(modKey("left_control", ["left_option", "left_command"])),
+    // from(noice("period")).to(modKey("period", ["left_shift"])),
+    // from(noice("comma")).to(modKey("comma", ["left_shift"])),
   ]),
   emojis,
   openApps,
@@ -116,3 +161,5 @@ export const rules: KarabinerRules[] = [
   ...inAppRules,
   ...privateRules,
 ];
+
+//

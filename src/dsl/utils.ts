@@ -16,6 +16,7 @@ const stringToCharsMaps: StringToChar = {
   ".": "period",
   ">": left_shift("period"),
   "%": left_shift("5"),
+  "&": left_shift("7"),
   "(": left_shift("9"),
   ")": left_shift("0"),
   "{": left_shift("open_bracket"),

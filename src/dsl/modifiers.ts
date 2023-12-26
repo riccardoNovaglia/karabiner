@@ -38,6 +38,6 @@ export function vsCodeProject(path: string): Shell {
 }
 export function pycharmProject(path: string): Shell {
   return {
-    shell_command: `~/.idea/pycharm ${path}`,
+    shell_command: `~/.idea/cmd/pycharm ${path}`,
   };
 }

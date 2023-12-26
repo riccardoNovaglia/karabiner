@@ -86,7 +86,7 @@ export function DeviceRule(
   manipulators: ManipulatorsInput
 ): KarabinerRules {
   const condition: DeviceCondition = {
-    type: "device_if",
+    type: deviceDefinition.unless ? "device_unless" : "device_if",
     identifiers: [
       {
         product_id: deviceDefinition.productId,

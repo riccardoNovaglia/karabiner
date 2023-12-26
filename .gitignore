@@ -5,3 +5,4 @@ build
 .tmp
 yarn-error.log
 .envrc
+.DS_Store

@@ -17,6 +17,7 @@ export type ManipulatorsInput =
   | ChainedOptionalDescription[];
 
 export type DeviceDefinition = {
+  unless: boolean;
   productId: number;
   vendorId: number;
 };

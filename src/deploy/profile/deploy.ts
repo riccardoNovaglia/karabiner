@@ -23,7 +23,6 @@ export function getUpdatedConfig(
   const tsProfile = config.profiles.find((profile) => profile.name === profileName);
   if (tsProfile) {
     tsProfile.selected = true;
-    console.log("setting rules to ", newRules);
     tsProfile.complex_modifications.rules = newRules;
   } else {
     console.error(
