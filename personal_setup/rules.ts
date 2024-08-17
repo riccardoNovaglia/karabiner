@@ -1,7 +1,6 @@
 import {
   AppRule,
   from,
-  hyper,
   left_command,
   left_ctrl,
   left_opt,
@@ -9,7 +8,6 @@ import {
   modKey,
   noice,
   pasteEmoji,
-  right_command,
   Rule,
   stc,
 } from "karabiner-ts";
@@ -136,21 +134,6 @@ function simpleRemaps() {
   return [...inAppRules, capsToEscape, easyPct, easyAmp, noMin, pauseF8, home, end];
 }
 
-// const hyperApps = Rule("Apps", [ // Setup in Raycast instead
-//   from(hyper("b")).to(app("Arc")),
-//   from(hyper("c")).to(appBundle("com.google.Chrome")),
-//   from(hyper("g")).to(app("Gmail")),
-//   from(hyper("l")).to(appBundle("com.google.Chrome.app.kjbdgfilnfhdoflbpgamdcdgpehopbep")), // caLendar
-//   from(hyper("m")).to(app("com.google.Chrome.app.kjgfgldnnfoeklkmfkjfagphfepbbdan")), // Meet
-//   from(hyper("n")).to(app("Notion")),
-//   from(hyper("s")).to(app("Slack")),
-//   from(hyper("t")).to(app("Terminal")),
-//   from(hyper("v")).to(app("Vivaldi")),
-//   from(hyper("y")).to(app("Spotify")),
-//   from(hyper("x")).to(appBundle("com.jetbrains.pycharm")),
-//   from(hyper("1")).to(appBundle("com.1password.1password")),
-// ]);
-
 function textReplace() {
   const emojis = Rule("Emojis", [from(noice("p")).to(pasteEmoji("🐼"))]);
   const suggestion = Rule("Suggestion", [
@@ -178,8 +161,6 @@ export const rules: KarabinerRules[] = [
   ...modifiersMappings(),
   ...simpleRemaps(),
   ...textReplace(),
-
-  // hyperApps,
 
   ...privateRules,
 ];
