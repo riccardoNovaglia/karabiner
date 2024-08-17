@@ -1,0 +1,5 @@
+deploy:
+  npm run deploy
+  
+backup:
+  npm run backup
