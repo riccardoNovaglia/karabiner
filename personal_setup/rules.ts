@@ -1,15 +1,15 @@
 import {
-  AppRule,
-  from,
-  left_command,
-  left_ctrl,
-  left_opt,
-  left_shift,
-  modKey,
-  noice,
-  pasteEmoji,
-  Rule,
-  stc,
+    AppRule, cool,
+    from,
+    left_command,
+    left_ctrl,
+    left_opt,
+    left_shift,
+    modKey,
+    noice,
+    pasteEmoji,
+    Rule,
+    stc
 } from "karabiner-ts";
 import { KarabinerRules } from "karabiner-ts/build/k/types";
 import { privateRules } from "./private";
@@ -37,35 +37,29 @@ function simpleRemaps() {
     from("f12").to("volume_increment"),
   ];
 
+  const easyMeet = [
+      from("f1").to(left_command("d")), // toggle audio
+      from("f2").to(left_command("e")), // toggle video
+      from("f3").to(modKey("m", ["left_control", "left_command"])), // toggle self view
+      //
+      from("f5").to(modKey("c", ["left_control", "left_command"])), // toggle chat panel
+      // Q11
+      from("f21").to(left_command("d")), // toggle audio
+      from("f22").to(left_command("e")), // toggle video
+      from("f23").to(modKey("m", ["left_control", "left_command"])), // toggle self view
+      // M4 mapped to f4 with VIA
+      // M5 mapped to f5 with VIA
+      ...easyVolume,
+    ]
+
   const inAppRules = [
     AppRule("Fleet", "com.jetbrains.fleet", [from("f12").to(modKey("f12", ["left_option"]))]),
+    AppRule("Meet", "com.apple.Safari", easyMeet),
+    AppRule("Meet", "com.google.Chrome.app.kjgfgldnnfoeklkmfkjfagphfepbbdan", easyMeet),
+    AppRule("Meet (Vivaldi)", "com.vivaldi.Vivaldi.app.kjgfgldnnfoeklkmfkjfagphfepbbdan", easyMeet),
     AppRule("Zoom", "us.zoom.xos", [
       from("f1").to(modKey("a", ["left_command", "left_shift"])), // toggle audio
       from("f2").to(modKey("v", ["left_command", "left_shift"])), // toggle video
-      ...easyVolume,
-    ]),
-    AppRule("Meet", "com.apple.Safari", [
-      from("f1").to(left_command("d")), // toggle audio
-      from("f2").to(left_command("e")), // toggle video
-      from("grave_accent_and_tilde").to(modKey("m", ["left_control", "left_command"])), // toggle self view
-      from("f5").to(modKey("c", ["left_control", "left_command"])), // toggle chat panel
-      // Q11
-      from("f21").to(left_command("d")), // toggle audio
-      from("f22").to(left_command("e")), // toggle video
-      from("f23").to(modKey("m", ["left_control", "left_command"])), // toggle self view
-      from("f24").to(modKey("c", ["left_control", "left_command"])), // toggle chat panel
-      ...easyVolume,
-    ]),
-    AppRule("Meet", "com.google.Chrome.app.kjgfgldnnfoeklkmfkjfagphfepbbdan", [
-      from("f1").to(left_command("d")), // toggle audio
-      from("f2").to(left_command("e")), // toggle video
-      from("grave_accent_and_tilde").to(modKey("m", ["left_control", "left_command"])), // toggle self view
-      from("f5").to(modKey("c", ["left_control", "left_command"])), // toggle chat panel
-      // Q11
-      from("f21").to(left_command("d")), // toggle audio
-      from("f22").to(left_command("e")), // toggle video
-      from("f23").to(modKey("m", ["left_control", "left_command"])), // toggle self view
-      from("f24").to(modKey("c", ["left_control", "left_command"])), // toggle chat panel
       ...easyVolume,
     ]),
     AppRule("Zoom - Q11", "us.zoom.xos", [
@@ -93,14 +87,14 @@ function simpleRemaps() {
       from(left_command("3")).to(left_ctrl("3")),
       from(left_command("4")).to(left_ctrl("4")),
     ]),
-    AppRule("Arc", "company.thebrowser.Browser", [
-      from(left_opt("tab")).to(left_ctrl("tab")),
-      from(modKey("tab", ["left_shift", "left_option"])).to(
-        modKey("tab", ["left_shift", "left_control"])
-      ),
-      from(left_command("k")).to(left_command("t")),
-      from("f12").to(modKey("j", ["left_command", "left_option"])),
-    ]),
+//    AppRule("Arc", "company.thebrowser.Browser", [
+//      from(left_opt("tab")).to(left_ctrl("tab")),
+//      from(modKey("tab", ["left_shift", "left_option"])).to(
+//        modKey("tab", ["left_shift", "left_control"])
+//      ),
+////      from(left_command("k")).to(left_command("t")),
+//      from("f12").to(modKey("j", ["left_command", "left_option"])),
+//    ]),
     AppRule("Chrome - 1pass remap", "com.google.Chrome", [
       from(modKey("backslash", ["left_command", "left_shift"])).to(
         modKey("x", ["left_command", "left_shift"])
@@ -111,6 +105,7 @@ function simpleRemaps() {
   const capsToEscape = Rule("Caps lock to escape", [
     from("caps_lock").to("escape"),
     from(left_shift("caps_lock")).to("escape"),
+    from(left_command("caps_lock")).to(left_command("escape")),
   ]);
   const easyPct = Rule(
     "Easy percent",
@@ -130,17 +125,21 @@ function simpleRemaps() {
   ]);
   const home = Rule("Home", [from(noice("up_arrow")).to(left_command("home"))]);
   const end = Rule("End", [from(noice("down_arrow")).to(left_command("end"))]);
+  const restoreGtLsThen = Rule("Restore greater/lower than", [
+    from(cool('period')).to(left_shift('period')),
+    from(cool('comma')).to(left_shift('comma')),
+  ])
 
-  return [...inAppRules, capsToEscape, easyPct, easyAmp, noMin, pauseF8, home, end];
+  return [...inAppRules, capsToEscape, easyPct, easyAmp, noMin, pauseF8, home, end, restoreGtLsThen];
 }
 
 function textReplace() {
-  const emojis = Rule("Emojis", [from(noice("p")).to(pasteEmoji("🐼"))]);
+//  const emojis = Rule("Emojis", [from(noice("p")).to(pasteEmoji("🐼"))]);
   const suggestion = Rule("Suggestion", [
     from(noice("s")).to(
       stc(
         `\`\`\`suggestion
-  
+
   \`\`\``
       )
     ),
@@ -154,7 +153,7 @@ function textReplace() {
     from(left_opt("i")).to(stc("__init__.py")),
   ]);
 
-  return [emojis, softwarey, suggestion];
+  return [softwarey, suggestion];
 }
 
 export const rules: KarabinerRules[] = [
